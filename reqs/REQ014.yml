@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: 'Certificación'
+level: 5.0
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  El diseño debe poder certificarse bajo esquema CB vía IRAM (alcance a confirmar: IEC 61851-1 y/o IEC 62752, seguridad de tomacorriente y electrónica), con homologación ENACOM del módulo Wi-Fi y medición apta para facturación.
+verified_by: 'pre-compliance (seguridad eléctrica, EMC, térmico) antes de presentar'

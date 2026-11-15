@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: 'Medición para facturación'
+level: 1.5
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  El socket debe medir energía activa con exactitud clase 1 (±1 %) para facturar por kWh, y reportar potencia activa y reactiva. (Hoy: ZMPT101L + ZMCT102 calibrados a 2-3 %.)
+verified_by: 'bench contra medidor patrón clase 0.5 en 5 puntos de carga'

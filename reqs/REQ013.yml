@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: 'Indicación de estado'
+level: 1.7
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  El socket debe indicar el estado con un LED RGB siguiendo el código de colores habitual de cargadores de VE (disponible / cargando / falla), más un buzzer para eventos.
+verified_by: 'inspección en bench'

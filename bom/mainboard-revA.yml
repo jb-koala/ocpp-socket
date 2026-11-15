@@ -1,85 +1,485 @@
-# BOM de mainboard rev A. Una entrada por parte distinta.
-# Campos obligatorios: ref, part, qty, order_code (JLCPCB "Cxxxxx" u otro proveedor), mass, cost, power_idle.
-# tests/test_bom.py falla si falta un campo; tests/test_budgets.py suma mass/cost/power_idle contra reqs/budgets.yml.
-# Los valores iniciales son estimaciones; se reemplazan por los reales cuando el esquemático esté cerrado.
-
+# BOM real del MVP (FLUXIO-PCB-01) transcripta de la planilla de JB, nov 2026.
+# Campos que usan los tests: ref, part, qty, order_code, mass, cost, power_idle.
+# order_code: TBD hasta que exista el esquemático en hw/ (después tests/test_bom.py lo exige).
+# Observaciones de la transcripción:
+#   - R11 figura como "RES" sin valor en la planilla original.
+#   - C2 / LD3 aparecían duplicados en la planilla; acá quedan una sola vez.
+#   - SKT1, HS1, L1, PB1 tenían precio "???" local; se cargó estimación.
+#   - La traba de tapa (latch, actuador, sensor) y el supercap NO están en esta BOM (van en rev B).
 board: mainboard-revA
+source: FLUXIO_OCPP_SOCKET_BOM.xlsx (MVP FLUXIO-PCB-01, nov 2026)
 currency: USD
-quantity_basis: 100   # los costos unitarios son a esta cantidad
-
+quantity_basis: 50
+cost_note: '''cost'' = precio China (JLC/LCSC) unitario; ''cost_local'' = precio Argentina. Los presupuestos usan ''cost''.
+  Masa y consumo en reposo son estimaciones a medir.'
 parts:
-  - ref: U1
-    part: ESP32-S3-WROOM-1-N8R2
-    qty: 1
-    supplier: JLCPCB
-    order_code: C2913205
-    mass: "3.5 g"
-    cost: "3.20 USD"
-    power_idle: "0.6 W"
-    note: "Wi-Fi conectado, modem sleep"
-
-  - ref: PS1
-    part: "Fuente AC/DC 220 V → 5 V 2 A (módulo)"
-    qty: 1
-    supplier: JLCPCB
-    order_code: TBD
-    mass: "25 g"
-    cost: "4.50 USD"
-    power_idle: "0.5 W"
-    note: "pérdidas en vacío"
-
-  - ref: K1
-    part: "Relé 16 A 250 VAC, bobina 5 V"
-    qty: 1
-    supplier: JLCPCB
-    order_code: TBD
-    mass: "18 g"
-    cost: "1.80 USD"
-    power_idle: "0 W"
-    note: "en reposo abierto; 0.45 W con bobina activa durante la carga"
-
-  - ref: U2
-    part: "Medidor de energía (p. ej. HLW8032 / BL0937)"
-    qty: 1
-    supplier: JLCPCB
-    order_code: TBD
-    mass: "1 g"
-    cost: "0.90 USD"
-    power_idle: "0.05 W"
-
-  - ref: TH1
-    part: "NTC 10k 3950 con cable, sobre bornes"
-    qty: 1
-    supplier: JLCPCB
-    order_code: TBD
-    mass: "2 g"
-    cost: "0.30 USD"
-    power_idle: "0 W"
-
-  - ref: SW1
-    part: "Botón de emergencia (hongo) NC"
-    qty: 1
-    supplier: local
-    order_code: TBD
-    mass: "30 g"
-    cost: "3.00 USD"
-    power_idle: "0 W"
-
-  - ref: J1
-    part: "Puerto de expansión 2x8 2.54 mm"
-    qty: 1
-    supplier: JLCPCB
-    order_code: TBD
-    mass: "2 g"
-    cost: "0.20 USD"
-    power_idle: "0 W"
-
-  - ref: PCB
-    part: "PCB 2 capas 100x80 mm"
-    qty: 1
-    supplier: JLCPCB
-    order_code: n/a
-    mass: "40 g"
-    cost: "0 USD"
-    power_idle: "0 W"
-    note: "costo de PCB excluido de bom_cost por definición en budgets.yml"
+- ref: BZ1
+  part: TDB-05PN buzzer 5V 12mm
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 2 g
+  cost: 0.550 USD
+  cost_local: 1.000 USD
+  power_idle: 0 W
+  note: Buzzer con oscilador
+- ref: C1,C5
+  part: CT7-222M 2n2 Y1 3kV
+  qty: 2
+  supplier: local/China
+  order_code: TBD
+  mass: 1 g
+  cost: 0.050 USD
+  cost_local: 0.124 USD
+  power_idle: 0 W
+  note: Cerámico 2.2nF Y1 safety
+- ref: C2
+  part: MKP61-104 100nF X1 275Vac
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 2 g
+  cost: 0.060 USD
+  cost_local: 0.220 USD
+  power_idle: 0 W
+  note: MKP 100nF X1 safety pitch 15mm
+- ref: C6,C8,C10
+  part: 100nF 50V X7R 1206
+  qty: 3
+  supplier: local/China
+  order_code: TBD
+  mass: 0.1 g
+  cost: 0.009 USD
+  cost_local: 0.050 USD
+  power_idle: 0 W
+  note: Cerámico SMD
+- ref: C3,C9,C11
+  part: EEE1CA100SR 10uF 16V
+  qty: 3
+  supplier: local/China
+  order_code: TBD
+  mass: 0.3 g
+  cost: 0.019 USD
+  cost_local: 0.160 USD
+  power_idle: 0 W
+  note: Electrolítico SMD B
+- ref: C4
+  part: EEE1CA471P 470uF 16V
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 2 g
+  cost: 0.050 USD
+  cost_local: 0.390 USD
+  power_idle: 0 W
+  note: Electrolítico SMD G
+- ref: C7
+  part: EEE1CA470WR 47uF 16V
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 0.5 g
+  cost: 0.019 USD
+  cost_local: 0.160 USD
+  power_idle: 0 W
+  note: Electrolítico SMD C
+- ref: D1
+  part: LS4148 1N4148 mini-melf
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 0.1 g
+  cost: 0.005 USD
+  cost_local: 0.020 USD
+  power_idle: 0 W
+  note: Diodo switching
+- ref: D2,D3,D5,D6
+  part: LL5223B zener 2V7
+  qty: 4
+  supplier: local/China
+  order_code: TBD
+  mass: 0.1 g
+  cost: 0.011 USD
+  cost_local: 0.020 USD
+  power_idle: 0 W
+  note: Zener 2.7V 500mW mini-melf
+- ref: D4
+  part: 1N4007 DO-214
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 0.2 g
+  cost: 0.008 USD
+  cost_local: 0.032 USD
+  power_idle: 0 W
+  note: Rectificador 1000V 1A
+- ref: F1
+  part: 5ETC0.5 fusible 0.5A 250Vac
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 1 g
+  cost: 0.048 USD
+  cost_local: 0.100 USD
+  power_idle: 0 W
+  note: Fusible cerámico lento 5x20
+- ref: F1-CLIP
+  part: PF-CLIP-20 clip fusible
+  qty: 2
+  supplier: local/China
+  order_code: TBD
+  mass: 0.5 g
+  cost: 0.012 USD
+  cost_local: 0.070 USD
+  power_idle: 0 W
+  note: Clip para fusible 5x20
+- ref: HS1
+  part: Disipador U aluminio (U1)
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 3 g
+  cost: 0.144 USD
+  cost_local: 0.086 USD
+  power_idle: 0 W
+  note: Disipador chico + tornillo M3
+- ref: K1
+  part: SFK112DM relé 20A 250Vac bobina 12V
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 18 g
+  cost: 3.700 USD
+  cost_local: 4.200 USD
+  power_idle: 0 W
+  note: Relé SPST grado contactor
+- ref: L1
+  part: UU9.8 2x10mH 0.5A
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 5 g
+  cost: 0.100 USD
+  cost_local: 0.100 USD
+  power_idle: 0 W
+  note: Inductor modo común
+- ref: LD1,LD3
+  part: LED verde 1206
+  qty: 2
+  supplier: local/China
+  order_code: TBD
+  mass: 0.05 g
+  cost: 0.004 USD
+  cost_local: 0.036 USD
+  power_idle: 0 W
+  note: LED alta eficiencia
+- ref: LD2
+  part: LED rojo 1206
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 0.05 g
+  cost: 0.004 USD
+  cost_local: 0.036 USD
+  power_idle: 0 W
+  note: LED alta eficiencia
+- ref: P1,P2
+  part: Tab soldable 6.3mm
+  qty: 2
+  supplier: local/China
+  order_code: TBD
+  mass: 1 g
+  cost: 0.090 USD
+  cost_local: 0.480 USD
+  power_idle: 0 W
+  note: Faston PCB recto
+- ref: J1,J2,J3,P3
+  part: FDD2-250 terminal hembra 6.3mm
+  qty: 4
+  supplier: local/China
+  order_code: TBD
+  mass: 1 g
+  cost: 0.150 USD
+  cost_local: 0.246 USD
+  power_idle: 0 W
+  note: Faston hembra 2.5mm2 aislado
+- ref: P4
+  part: 2418HJ-06 housing 6 pin 2mm
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 0.5 g
+  cost: 0.030 USD
+  cost_local: 0.200 USD
+  power_idle: 0 W
+  note: Housing cable
+- ref: P5
+  part: 2417SJ-6 header 6 pin 2mm
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 0.5 g
+  cost: 0.021 USD
+  cost_local: 0.300 USD
+  power_idle: 0 W
+  note: Header PCB
+- ref: P6
+  part: 2417SJ-10 header 10 pin
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 0.8 g
+  cost: 0.021 USD
+  cost_local: 0.500 USD
+  power_idle: 0 W
+  note: Header PCB
+- ref: P7
+  part: 2117SJ-2 header 2 pin 2mm
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 0.3 g
+  cost: 0.020 USD
+  cost_local: 0.200 USD
+  power_idle: 0 W
+  note: Header PCB
+- ref: P8
+  part: 2418HJ-2 housing 2 pin 2mm
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 0.3 g
+  cost: 0.018 USD
+  cost_local: 0.070 USD
+  power_idle: 0 W
+  note: Housing cable
+- ref: P-CONTACTS
+  part: Contactos housing 2mm
+  qty: 8
+  supplier: local/China
+  order_code: TBD
+  mass: 0.05 g
+  cost: 0.014 USD
+  cost_local: 0.120 USD
+  power_idle: 0 W
+  note: Terminal hembra crimp
+- ref: PB1
+  part: QN12-L1-RGB pulsador iluminado RGB 12mm
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 8 g
+  cost: 2.000 USD
+  cost_local: 2.000 USD
+  power_idle: 0.05 W
+  note: Pulsador momentáneo con LED RGB
+- ref: PS1
+  part: HLK-10M12 fuente 10W 12V
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 25 g
+  cost: 2.270 USD
+  cost_local: 6.112 USD
+  power_idle: 0.4 W
+  note: Fuente AC/DC compacta 100-240V
+- ref: Q1-Q6
+  part: BC817-16 NPN SOT-23
+  qty: 6
+  supplier: local/China
+  order_code: TBD
+  mass: 0.02 g
+  cost: 0.009 USD
+  cost_local: 0.040 USD
+  power_idle: 0 W
+  note: Transistor NPN 45V 500mA
+- ref: R1,R3,R25
+  part: 330K 1206
+  qty: 3
+  supplier: local/China
+  order_code: TBD
+  mass: 0.02 g
+  cost: 0.005 USD
+  cost_local: 0.009 USD
+  power_idle: 0 W
+  note: Resistencia SMD
+- ref: R2,R15,R22
+  part: 2K2 1206
+  qty: 3
+  supplier: local/China
+  order_code: TBD
+  mass: 0.02 g
+  cost: 0.005 USD
+  cost_local: 0.009 USD
+  power_idle: 0 W
+  note: Resistencia SMD
+- ref: R4,R5
+  part: MF50S-56K 56K 0.5W
+  qty: 2
+  supplier: local/China
+  order_code: TBD
+  mass: 0.3 g
+  cost: 0.010 USD
+  cost_local: 0.300 USD
+  power_idle: 0.002 W
+  note: Metal film (divisor sensado de línea)
+- ref: R6,R7
+  part: 100R 1206
+  qty: 2
+  supplier: local/China
+  order_code: TBD
+  mass: 0.02 g
+  cost: 0.005 USD
+  cost_local: 0.009 USD
+  power_idle: 0 W
+  note: Resistencia SMD
+- ref: R8..R23 (11)
+  part: 1K 1206
+  qty: 11
+  supplier: local/China
+  order_code: TBD
+  mass: 0.02 g
+  cost: 0.005 USD
+  cost_local: 0.009 USD
+  power_idle: 0 W
+  note: Resistencia SMD
+- ref: R9
+  part: 560R 1206
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 0.02 g
+  cost: 0.005 USD
+  cost_local: 0.009 USD
+  power_idle: 0 W
+  note: Resistencia SMD
+- ref: R11
+  part: RES (valor sin definir)
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 0.02 g
+  cost: 0.000 USD
+  cost_local: 0.009 USD
+  power_idle: 0 W
+  note: Resistencia SMD — VALOR A DEFINIR
+- ref: R18
+  part: 22K 1206
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 0.02 g
+  cost: 0.005 USD
+  cost_local: 0.009 USD
+  power_idle: 0 W
+  note: Resistencia SMD
+- ref: SKT1
+  part: Toma IP universal 10A
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 60 g
+  cost: 0.380 USD
+  cost_local: 3.000 USD
+  power_idle: 0 W
+  note: Toma AC estanca 10A
+- ref: T1
+  part: ZMCT102 transformador de corriente
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 8 g
+  cost: 0.370 USD
+  cost_local: 3.000 USD
+  power_idle: 0 W
+  note: CT 1000:1 (medición de corriente)
+- ref: TB1
+  part: HB9500-9.5 bornera 3P 9.5mm
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 6 g
+  cost: 0.500 USD
+  cost_local: 0.370 USD
+  power_idle: 0 W
+  note: Bornera barrera con tapa
+- ref: TR1
+  part: ZMPT101L transformador de tensión
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 10 g
+  cost: 0.100 USD
+  cost_local: 13.500 USD
+  power_idle: 0.1 W
+  note: VT 1:1 2mA (medición de tensión)
+- ref: U1
+  part: L7805CV regulador 5V TO-220
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 2 g
+  cost: 0.082 USD
+  cost_local: 0.139 USD
+  power_idle: 0.7 W
+  note: Regulador lineal 12V→5V
+- ref: U2
+  part: ESP32-S3-DEVKITC-1 (16MB)
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 8 g
+  cost: 10.480 USD
+  cost_local: 9.600 USD
+  power_idle: 0.6 W
+  note: Módulo devkit con USB dual
+- ref: VR1
+  part: S07K275 varistor
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 1 g
+  cost: 0.110 USD
+  cost_local: 0.210 USD
+  power_idle: 0 W
+  note: Varistor 275Vac 7mm
+- ref: PCB
+  part: FLUXIO-PCB-01 FR4 2 capas
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 45 g
+  cost: 0.500 USD
+  cost_local: 1.000 USD
+  power_idle: 0 W
+  note: PCB doble faz
+- ref: SUPPORTS
+  part: ASS-6 soporte nylon
+  qty: 4
+  supplier: local/China
+  order_code: TBD
+  mass: 0.5 g
+  cost: 0.050 USD
+  cost_local: 0.100 USD
+  power_idle: 0 W
+  note: Separador autoadhesivo
+- ref: WIRES
+  part: Cable 2.5mm2 x200mm x3
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 30 g
+  cost: 0.500 USD
+  cost_local: 3.500 USD
+  power_idle: 0 W
+  note: Cableado interno L/N/PE
+- ref: BOX
+  part: GENROD IP65 115x165x65
+  qty: 1
+  supplier: local/China
+  order_code: TBD
+  mass: 250 g
+  cost: 2.000 USD
+  cost_local: 3.500 USD
+  power_idle: 0 W
+  note: Caja PVC IP65

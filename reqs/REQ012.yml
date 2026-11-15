@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: 'Seguridad de comunicaciones'
+level: 1.6
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  La conexión al CSMS debe usar TLS (wss://) con credenciales por dispositivo. Las imágenes OTA deben estar firmadas y el ESP32-S3 debe tener secure boot y flash encryption habilitados en producción.
+verified_by: 'bench: OTA con imagen sin firmar debe ser rechazada; conexión sin TLS debe fallar'

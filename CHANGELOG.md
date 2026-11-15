@@ -11,3 +11,10 @@ Formato: fecha, área, qué cambió. Lo más nuevo arriba.
 - firmware: esqueleto PlatformIO con env `native` (tests Unity) y `esp32s3` (ESP-IDF).
   `session_guard` (guarda de temperatura) con tests en laptop.
 - tests: `test_budgets.py` y `test_bom.py` fallan si se supera un presupuesto o falta un código.
+
+## 2026-11-15 (2)
+
+- bom: BOM real del MVP FLUXIO-PCB-01 transcripta de la planilla (precios China y local).
+- reqs: ajustes a la realidad (10 A, 100-240 V, traba con sensor, medición clase 1, TLS/OTA firmada, certificación).
+- decisions: 0005 WROOM en placa, 0006 IC de medición, 0007 buck en vez de 7805 (todas propuestas).
+- docs: 001-mvp-a-produccion.md con el plan por Gates.

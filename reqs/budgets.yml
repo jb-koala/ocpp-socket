@@ -3,13 +3,13 @@
 # Cambiar un valor de acá requiere una decisión en decisions/ (ver CLAUDE.md §3).
 
 mainboard-revA:
-  mass:       "250 g"      # placa poblada, sin gabinete
-  idle_power: "2.5 W"      # consumo en reposo, conectado al CSMS, relé abierto
-  bom_cost:   "45 USD"     # costo de componentes a 100 unidades, sin PCB ni armado
+  mass:       "650 g"      # placa poblada + caja IP65 + toma + cableado (MVP mide ~500 g; margen para traba y supercap)
+  idle_power: "2.5 W"      # en reposo, Wi-Fi conectado, relé abierto (MVP estimado 1.85 W; el 7805 lineal pesa ~0.7 W)
+  bom_cost:   "40 USD"     # componentes a 50-100 u, precios China, con PCB y caja, sin traba ni armado (MVP: ~26 USD)
 
 safety:
   temp_cutoff:  "85 degC"   # REQ004: por encima de esto se corta la sesión
   temp_resume:  "70 degC"   # se puede reanudar por debajo de esto
   temp_hold:    "5 s"       # tiempo sostenido sobre temp_cutoff antes de cortar
   temp_cooldown: "120 s"    # espera mínima después de un corte antes de reanudar
-  max_current:  "16 A"      # corriente máxima habilitada por el relé
+  max_current:  "10 A"      # versión base. Relé SFK112DM admite 20 A: variante 20 A sobre el mismo hardware

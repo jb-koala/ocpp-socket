@@ -1,11 +1,11 @@
 active: true
 derived: false
-header: 'Traba de tapa segura ante falta de energía'
+header: 'Traba de tapa segura'
 level: 2.1
 links: []
 normative: true
 ref: ''
 reviewed: null
 text: |
-  La traba de la tapa debe liberarse automáticamente si el socket pierde alimentación, para que el usuario pueda retirar el cable.
-verified_by: 'bench: cortar alimentación con tapa trabada y verificar liberación'
+  La tapa debe trabarse al iniciar la sesión y un sensor debe confirmar el estado de la traba antes de cerrar el relé. La traba debe liberarse automáticamente si el socket pierde alimentación, y debe existir una liberación manual de emergencia accesible para el instalador.
+verified_by: 'bench: cortar alimentación con tapa trabada y verificar liberación; test de sensor de traba en firmware'

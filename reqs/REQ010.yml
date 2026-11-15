@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: 'Entrada y salida eléctrica'
+level: 1.4
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  El socket debe operar con entrada de 100-240 V AC 50/60 Hz y entregar 10 A continuos en la toma (variante de 20 A sobre el mismo hardware, con toma y cableado acordes). Debe incluir fusible, varistor y filtro de modo común en la entrada.
+verified_by: 'pre-compliance: ensayo térmico 10 A continuos; inspección de esquemático'
