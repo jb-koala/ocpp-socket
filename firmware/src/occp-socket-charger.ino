@@ -14,6 +14,11 @@
 #include <Wire.h>
 
 #include "Version.h"
+#include "board/board.h"
+
+#ifndef GIT_COMMIT
+#define GIT_COMMIT "unknown"
+#endif
 
 // Clave del OTA HTTP local (puerto 8266). Se define en build_flags de platformio.ini
 // o en un archivo local no versionado; sin definir, el endpoint /update queda deshabilitado.
@@ -31,19 +36,16 @@ Preferences energyPrefs;
 WebServer *otaServer = nullptr;
 WebServer *dashboardServer = nullptr;
 
-const int PIN_BOTON = 4;
-const int PIN_LED = 48;
-const int PIN_RELAY = 5;
-const int PIN_BOOT = 0; // Botón BOOT onboard — INPUT_PULLUP, LOW = presionado
-const int PIN_RESET_EXT = 7; // Pulsador externo para reset — INPUT_PULLUP, conectado a GND
+// Pines: ver board/board_<placa>.h (seleccionada por build_flags en platformio.ini)
 Adafruit_NeoPixel pixels(1, PIN_LED, NEO_GRB + NEO_KHZ800);
 
 // ── SCT-013-030 — Sensor de corriente ────────────────────────────────────
-#define PIN_SCT           6       // GPIO6 — ADC1_CH5 (no usar ADC2, interfiere con WiFi)
+// PIN_SCT viene de board/
 #define SCT_NUM_MUESTRAS  1480    // ~148ms de captura → ~7 ciclos a 50Hz
 #define SCT_UMBRAL_A      2.0    // Umbral de ruido ambiental (A) — suprimir EMI
 #define SCT_INTERVAL      5000   // Intervalo entre mediciones (ms)
 #define OCPP_TIMEOUT_SIN_CONSUMO  420000 // 7 minutos de inactividad (ms)
+#define WDT_TIMEOUT_S     30     // Watchdog de tarea: reinicio si loop() no responde en 30 s
 float SCT_CALIBRACION = 47.2f;  // Cargado desde NVS al arrancar (default: 47.2)
 static uint16_t _sctMuestras[SCT_NUM_MUESTRAS];
 
@@ -66,7 +68,7 @@ static FwInstallState  fwInstallState  = FwInstallState::Idle;
 
 // ── Pantalla OLED SSD1306 I2C (128x32) ────────────────────────────────────
 // Constructor U8g2 para SSD1306 de 128x32 por hardware I2C, rotación normal (R0)
-U8G2_SSD1306_128X32_UNIVISION_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE, /* clock=*/ 9, /* data=*/ 8);
+U8G2_SSD1306_128X32_UNIVISION_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE, /* clock=*/ PIN_I2C_SCL, /* data=*/ PIN_I2C_SDA);
 
 unsigned long oledLastActivityAt = 0;    // Timestamp para apagar la pantalla
 unsigned long oledLastUpdateAt = 0;      // Timestamp del último renderizado
@@ -328,10 +330,23 @@ void actualizarLed(int r, int g, int b, int estadoID) {
   }
 }
 
+// Basic auth para dashboard y OTA HTTP (P0-6 de la auditoría). Usuario fijo "fluxio",
+// clave OTA_HTTP_PASS (platformio.local.ini). Sin clave definida no se levanta ningun servidor.
+static bool httpAuth(WebServer *srv) {
+  if (srv->authenticate("fluxio", OTA_HTTP_PASS)) return true;
+  srv->requestAuthentication(BASIC_AUTH, "OCPP Socket");
+  return false;
+}
+
 void setupOtaServer() {
+  if (strlen(OTA_HTTP_PASS) == 0) {
+    Serial.println("[HTTP] OTA_HTTP_PASS no definida: dashboard (80) y OTA HTTP (8266) deshabilitados");
+    return;
+  }
   otaServer = new WebServer(8266);
 
   otaServer->on("/", HTTP_GET, []() {
+    if (!httpAuth(otaServer)) return;
     otaServer->send(200, "text/plain",
       "Fluxio OTA Server\nFirmware: " + String(FIRMWARE_VERSION) +
       "\nIP: " + WiFi.localIP().toString() +
@@ -340,6 +355,7 @@ void setupOtaServer() {
   });
 
   otaServer->on("/status", HTTP_GET, []() {
+    if (!httpAuth(otaServer)) return;
     bool txActive = isTransactionActive();
     String json = "{";
     json += "\"firmware\":\"" + String(FIRMWARE_VERSION) + "\",";
@@ -363,6 +379,7 @@ void setupOtaServer() {
   dashboardServer = new WebServer(80);
 
   dashboardServer->on("/", HTTP_GET, []() {
+    if (!httpAuth(dashboardServer)) return;
     String page = String(HTML_DASHBOARD);
     page.replace("__FW_VER__", FIRMWARE_VERSION);
     dashboardServer->send(200, "text/html", page);
@@ -370,6 +387,7 @@ void setupOtaServer() {
 
   // Duplicamos el endpoint /status en el puerto 80 para la consulta AJAX
   dashboardServer->on("/status", HTTP_GET, []() {
+    if (!httpAuth(dashboardServer)) return;
     bool txActive = isTransactionActive();
     String json = "{";
     json += "\"firmware\":\"" + String(FIRMWARE_VERSION) + "\",";
@@ -394,13 +412,14 @@ void setupOtaServer() {
 
   otaServer->on("/update", HTTP_POST,
     []() {
+      if (!httpAuth(otaServer)) return;
       bool ok = !Update.hasError();
       otaServer->send(200, "text/plain", ok ? "OK — Reiniciando..." : "ERROR en la actualizacion");
       delay(500);
       ESP.restart();
     },
     []() {
-      if (strlen(OTA_HTTP_PASS) == 0 || otaServer->header("X-OTA-Pass") != OTA_HTTP_PASS) {
+      if (otaServer->header("X-OTA-Pass") != OTA_HTTP_PASS) {
         otaServer->send(401, "text/plain", "No autorizado");
         return;
       }
@@ -486,6 +505,7 @@ void verificarBotonResetDuranteEspera(unsigned int ms) {
       bootHeld = false;
     }
     delay(50); // Muestreo cada 50ms para no saturar la CPU
+    esp_task_wdt_reset();
   }
 }
 
@@ -558,9 +578,23 @@ void setup() {
 
   Serial.println("\n\n==========================================");
   Serial.println("   FLUXIO EV CHARGER - CONTROL REMOTO OK");
-  Serial.println("==========================================\n");
+  Serial.println("==========================================");
+  // Etapa 8: la placa imprime el commit al bootear; bench/test_boot.py lo compara con HEAD.
+  Serial.printf("ocpp-socket fw commit=%s version=%s board=%s\n\n", GIT_COMMIT, FIRMWARE_VERSION, BOARD_NAME);
 
-  esp_task_wdt_deinit();
+  // Watchdog de tarea (P0-5 de la auditoría): si loop() se cuelga, el chip reinicia y el relé
+  // vuelve a LOW. 30 s cubre el peor bloqueo esperado (scan Wi-Fi + 3 ciclos de conexión se
+  // alimentan por dentro). Se alimenta en loop(), en la espera de Wi-Fi y en la descarga OTA.
+#if ESP_ARDUINO_VERSION_MAJOR >= 3
+  esp_task_wdt_config_t wdtCfg;
+  wdtCfg.timeout_ms = WDT_TIMEOUT_S * 1000;
+  wdtCfg.idle_core_mask = 0;
+  wdtCfg.trigger_panic = true;
+  esp_task_wdt_reconfigure(&wdtCfg);
+#else
+  esp_task_wdt_init(WDT_TIMEOUT_S, true);
+#endif
+  esp_task_wdt_add(NULL);
   pinMode(PIN_BOTON, INPUT_PULLDOWN);
   pinMode(PIN_RELAY, OUTPUT);
   digitalWrite(PIN_RELAY, LOW);
@@ -571,7 +605,7 @@ void setup() {
   analogSetPinAttenuation(PIN_SCT, ADC_11db);          // Rango 0–3.3V para SCT-013
 
   // Iniciar bus I2C en pines 8 y 9
-  Wire.begin(8, 9);
+  Wire.begin(PIN_I2C_SDA, PIN_I2C_SCL);
   
   // Inicializar pantalla OLED
   u8g2.begin();
@@ -727,6 +761,7 @@ void setup() {
             continue;
           }
           startMs = millis();
+          esp_task_wdt_reset();
           size_t toRead = min(avail, sizeof(buf));
           size_t read = stream->readBytes(buf, toRead);
           size_t w = Update.write(buf, read);
@@ -793,9 +828,12 @@ void setup() {
   pixels.begin();
   pixels.setBrightness(50);
   actualizarLed(255, 0, 0, 0);
+  Serial.println("READY"); // pytest-embedded espera esta linea (bench/)
 }
 
 void loop() {
+  esp_task_wdt_reset();
+
   // ── Comando Serial: 'C' → factory reset ─────────────────────────────────
   if (Serial.available()) {
     char c = Serial.read();

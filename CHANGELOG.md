@@ -27,3 +27,15 @@ Formato: fecha, área, qué cambió. Lo más nuevo arriba.
 - decisions: 0008 mantener Arduino + MicroOcpp sobre PlatformIO (aclara 0001).
 - docs: 002-auditoria-firmware.md con hallazgos P0/P1/P2 y el desfasaje firmware ↔ PCB.
 - hook: también bloquea `arduino-cli upload`.
+
+## 2026-11-15 (4) — branch fw/linea-base
+
+- fw: capa `src/board/` con un header por placa; el `.ino` ya no tiene GPIOs hardcodeados.
+  `board_devkit_proto.h` = lo que corre en campo; `board_fluxio_pcb01.h` falla a propósito
+  hasta completar `hw/mainboard-revA/pinout.md`.
+- fw: watchdog de tarea reactivado (30 s), alimentado en `loop()`, espera de Wi-Fi y descarga OTA (P0-5).
+- fw: dashboard (80) y OTA HTTP (8266) con Basic auth (`fluxio` / `OTA_HTTP_PASS`); sin clave
+  definida no se levantan (P0-6).
+- fw: el boot imprime `ocpp-socket fw commit=<hash> version=<v> board=<placa>` y `READY`.
+- ci: job `firmware-build` compila `esp32s3` con PlatformIO y sube el `.bin` como artefacto.
+- hw: `mainboard-revA/pinout.md` como plantilla a completar.
