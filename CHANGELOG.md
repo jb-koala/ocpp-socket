@@ -35,3 +35,15 @@ Formato: fecha, área, qué cambió. Lo más nuevo arriba.
   `pinout.md` asignación completa de GPIO del WROOM-1 y conectores, `jlcpcb.kicad_dru` con la barrera de 6.4 mm.
 - bom: `mainboard-revB.yml` estimada (~USD 25 China, ~565 g, ~1.2 W en reposo).
 - reqs: entrada `mainboard-revB` en `budgets.yml` (650 g, 1.5 W, 40 USD), aprobada por JB.
+
+## 2026-11-15 (7) — branch mech/caja
+
+- mech: caja propia como código (build123d) según el boceto: base, frente con pozo de toma en embudo,
+  tapa con bisagra que cierra con la ficha, 2 bisagras, caja de traba (solenoide + Hall, pistón hacia
+  abajo), placa adaptadora de toma. Imprimible en FDM sin soportes; STL orientados + STEP.
+- mech: 22 tests (interferencias con PCB/toma/ficha/botones, apertura de la tapa a 30/60/95°, junta 25 %,
+  recorrido de la traba, cama de impresión, masa vs BOM). Renders en `mechanical/enclosure/renders/`.
+- hw: `mainboard-revB/keepouts.md` — zona alta (x 0–65, ≤ 32 mm) / zona baja (x 65–100, ≤ 12 mm), TB1, antena.
+- bom: rev B con la caja impresa (370 g, USD 8.1) + tornillería (43 g, USD 2). Total 728 g / USD 33.5.
+- decisions: 0011 caja propia impresa en ASA.
+- **tests/test_budgets.py falla en masa (728 g > 650 g): decisión pendiente de JB.**

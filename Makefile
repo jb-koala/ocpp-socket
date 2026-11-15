@@ -1,9 +1,9 @@
 BOARD ?= mainboard-revA
 PY    ?= python3
 
-.PHONY: check test fw-test fw-build limits hw-check hw-route fab bench-test reqs
+.PHONY: check test fw-test fw-build limits hw-check hw-route fab bench-test reqs mech mech-test
 
-check: limits test fw-test        ## todo lo que corre en CI
+check: limits test fw-test mech-test  ## todo lo que corre en CI
 
 test:                             ## pytest: presupuestos, BOM, requerimientos
 	$(PY) -m pytest tests/ -q
@@ -40,6 +40,12 @@ fab:                              ## gerbers, BOM y posiciones vía KiBot
 
 bench-test:                       ## hardware real. Bloqueado por hook salvo OCPP_ALLOW_FLASH=1
 	cd bench && pytest -q --target esp32s3 --embedded-services esp,idf --app-path ../firmware/.pio/build/esp32s3
+
+mech:                             ## caja: exporta STL/STEP a mechanical/enclosure/out/ y regenera renders
+	cd mechanical/enclosure && $(PY) enclosure.py && $(PY) render.py
+
+mech-test:                        ## caja: interferencias, holguras, junta, traba, cama de impresión, masa
+	$(PY) -m pytest mechanical/tests -q
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN{FS=":.*?## "}{printf "  %-12s %s\n", $$1, $$2}'

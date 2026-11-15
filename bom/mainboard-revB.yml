@@ -431,14 +431,23 @@ parts:
   power_idle: 0 W
   note: ''
 - ref: BOX
-  part: GENROD IP65 115x165x65
+  part: Caja propia impresa en ASA (mechanical/enclosure)
   qty: 1
-  supplier: JLCPCB
+  supplier: impresión propia
+  order_code: n/a
+  mass: 370 g
+  cost: 8.100 USD
+  power_idle: 0 W
+  note: base + frente + tapa + 2 bisagras + caja de traba + placa de toma; masa por tests (~367 g), filamento a USD 22/kg
+- ref: BOX-HW
+  part: 'Tornillería y sellos de la caja: 4 insertos M4, 12 insertos M3, 4 M4x16, 12 M3, cordón 2.4 mm, pasador Ø3, imán 6x3, prensacable M20'
+  qty: 1
+  supplier: local/LCSC
   order_code: TBD
-  mass: 250 g
+  mass: 43 g
   cost: 2.000 USD
   power_idle: 0 W
-  note: rev A
+  note: ver mechanical/enclosure/README.md
 - ref: SUPPORTS
   part: Separadores nylon
   qty: 4
