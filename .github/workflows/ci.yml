@@ -43,7 +43,9 @@ jobs:
 
   hardware-check:
     runs-on: ubuntu-latest
-    container: kicad/kicad:10.0
+    container:
+      image: kicad/kicad:10.0
+      options: --user root
     steps:
       - uses: actions/checkout@v4
       - run: make hw-check
