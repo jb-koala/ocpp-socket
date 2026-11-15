@@ -1,6 +1,5 @@
 # BOM estimada de rev B, derivada del diseño por bloques. order_code TBD hasta que exista el esquemático.
 # Supercap (C-SC) con costo 0: footprint sin poblar hasta aceptar decisions/0004.
-# NOTA: tests/test_budgets.py exige una entrada mainboard-revB en reqs/budgets.yml (pendiente de aprobación de JB).
 board: mainboard-revB
 source: hw/mainboard-revB/README.md (diseño por bloques, 2026-11-15)
 currency: USD
