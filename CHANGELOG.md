@@ -34,5 +34,4 @@ Formato: fecha, área, qué cambió. Lo más nuevo arriba.
 - hw: `mainboard-revB/README.md` diseño por bloques (10 bloques, qué se conserva de rev A y qué cambia),
   `pinout.md` asignación completa de GPIO del WROOM-1 y conectores, `jlcpcb.kicad_dru` con la barrera de 6.4 mm.
 - bom: `mainboard-revB.yml` estimada (~USD 25 China, ~565 g, ~1.2 W en reposo).
-- fw: `board_fluxio_revb.h` con el pinout de rev B.
 - PENDIENTE de aprobación de JB: entrada `mainboard-revB` en `reqs/budgets.yml` (CLAUDE.md §3).
