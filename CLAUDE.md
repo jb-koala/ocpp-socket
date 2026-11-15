@@ -39,7 +39,7 @@ Estas acciones las ejecuta la persona, nunca el agente:
 
 - Pagar un carrito (JLCPCB, Mouser, etc.). El agente prepara el carrito y se detiene.
 - Flashear una placa conectada a hardware de potencia (relé, contactor, 220 V). El hook en
-  `.claude/settings.json` bloquea `pio run -t upload`, `esptool`, `probe-rs` y `idf.py flash`
+  `.claude/settings.json` bloquea `pio run -t upload`, `arduino-cli upload`, `esptool`, `probe-rs` y `idf.py flash`
   salvo que la persona exporte `OCPP_ALLOW_FLASH=1` en esa sesión.
 - Energizar el bench con tensión de red.
 - Cambiar un umbral de seguridad (temperatura de corte, corriente máxima).
@@ -47,8 +47,9 @@ Estas acciones las ejecuta la persona, nunca el agente:
 ## 5. Reglas de firmware
 
 - La lógica de negocio (máquina de estados de sesión, guardas de temperatura, parsing OCPP)
-  vive en `firmware/lib/` sin dependencias de ESP-IDF, para que corra en laptop.
-- Todo lo que depende del hardware vive en `firmware/src/` detrás de una interfaz chica.
+  vive en `firmware/lib/` sin dependencias de Arduino ni ESP-IDF, para que corra en laptop.
+- Todo lo que depende del hardware vive en `firmware/src/` (framework Arduino + MicroOcpp, decisions/0008)
+  detrás de una interfaz chica. El `.ino` se adelgaza de a un módulo por vez, nunca en un refactor grande.
 - Escalera de tests: `native` (laptop) → placa de desarrollo → placa real. No se salta un escalón.
 - Al bootear, el firmware imprime el hash de commit. Antes de interpretar un log, verificá que
   el commit que bootea sea el que creés que es.

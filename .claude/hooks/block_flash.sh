@@ -6,7 +6,7 @@ set -euo pipefail
 input=$(cat)
 cmd=$(printf '%s' "$input" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("tool_input",{}).get("command",""))' 2>/dev/null || true)
 
-pattern='(pio[[:space:]]+run.*-t[[:space:]]+upload|pio[[:space:]]+run.*--target[[:space:]]+upload|pio[[:space:]]+test[[:space:]]+-e[[:space:]]+esp32|esptool|idf\.py[[:space:]].*flash|probe-rs[[:space:]]+(run|download|flash)|openocd|dfu-util|make[[:space:]]+(flash|bench-test|bench-power))'
+pattern='(pio[[:space:]]+run.*-t[[:space:]]+upload|pio[[:space:]]+run.*--target[[:space:]]+upload|pio[[:space:]]+test[[:space:]]+-e[[:space:]]+esp32|esptool|idf\.py[[:space:]].*flash|probe-rs[[:space:]]+(run|download|flash)|openocd|dfu-util|arduino-cli[[:space:]]+upload|make[[:space:]]+(flash|bench-test|bench-power))'
 
 if printf '%s' "$cmd" | grep -Eq "$pattern"; then
   if [ "${OCPP_ALLOW_FLASH:-0}" != "1" ]; then

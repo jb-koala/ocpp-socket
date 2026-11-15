@@ -1,0 +1,7 @@
+; Copiar a platformio.local.ini (ignorado por git) y completar.
+[env:esp32s3]
+build_flags =
+    ${env.build_flags}
+    -DOTA_HTTP_PASS=\"cambiar-esta-clave\"
+upload_port = /dev/cu.usbmodem*
+monitor_port = /dev/cu.usbmodem*

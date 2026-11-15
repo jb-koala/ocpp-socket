@@ -24,3 +24,4 @@ data/runs/**/*.bin
 
 # OS
 .DS_Store
+firmware/platformio.local.ini

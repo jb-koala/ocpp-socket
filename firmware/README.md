@@ -1,21 +1,38 @@
 # firmware/
 
-ESP-IDF vía PlatformIO, target ESP32-S3 (decisions/0001).
+ESP32-S3 con **framework Arduino + MicroOcpp** (decisions/0008), compilado con PlatformIO.
+Es el firmware que corre en campo desde ago-2026 (v1.0.23), importado tal cual el 2026-11-15
+desde el proyecto Arduino IDE `occp-socket-charger` (ver `docs/002-auditoria-firmware.md`).
 
 ```
-lib/session_guard/   lógica pura (sin ESP-IDF): guarda de temperatura (REQ004). limits.h se GENERA desde reqs/budgets.yml
-src/                 todo lo que toca hardware: main.c, drivers, Wi-Fi, OCPP transport
-test/                tests Unity. Corren en laptop (env native) y en placa (env esp32s3)
+src/                 firmware de campo. El .ino lo compila PlatformIO directamente.
+  occp-socket-charger.ino   orquestador: setup/loop, OCPP, medición SCT, OTA, dashboard, OLED
+  WiFiProvisioning.*        portal cautivo + NVS (credenciales, URL OCPP, calibración)
+  LedController.*           NeoPixel por estados (no usado aún por el .ino)
+  RelayController.*         relé (no usado aún por el .ino)
+  Version.h                 FIRMWARE_VERSION
+lib/session_guard/   lógica pura nueva (guarda de temperatura, REQ004). limits.h se GENERA desde reqs/budgets.yml
+test/                tests Unity de lib/. Corren en laptop (env native)
+docs/                sensado de corriente, OLED, guía de flasheo inicial, lecciones aprendidas
+legacy/              BOM del prototipo en devkit y log de referencia de una carga OK
 scripts/             git_version.py (commit en el build), gen_limits.py (umbrales desde budgets.yml)
 ```
 
-## Escalera de tests (no se saltan escalones)
+## Secretos
+
+No hay credenciales en el código. La clave del OTA HTTP local se pasa por `platformio.local.ini`
+(no versionado, ver `.example`). Sin ella, el endpoint `/update` del puerto 8266 queda deshabilitado;
+el OTA por OCPP (`UpdateFirmware`) no depende de esa clave.
+
+## Escalera de tests
 
 1. `pio test -e native` — laptop, solo `lib/`. Corre en CI.
-2. `pio test -e esp32s3` — devkit ESP32-S3 por USB, sin potencia conectada.
-3. `make bench-test` — placa real en bench (`bench/`), con pytest-embedded esperando `READY`.
+2. `pio run -e esp32s3` — build completo (sin flashear). Corre en CI.
+3. `pio test -e esp32s3` — devkit por USB, sin potencia conectada.
+4. `make bench-test` — placa real en bench, con pytest-embedded esperando `READY`.
 
 ## Flashear
 
-`pio run -e esp32s3 -t upload` está **bloqueado por el hook** de `.claude/settings.json`.
-Lo corre una persona, con `OCPP_ALLOW_FLASH=1`, después de verificar que el bench está sin tensión de red.
+`pio run -e esp32s3 -t upload` y `arduino-cli upload` están **bloqueados por el hook** de
+`.claude/settings.json`. Los corre una persona con `OCPP_ALLOW_FLASH=1`, con el bench sin tensión
+de red. Primer flash por USB; después OTA (docs/guia_flasheo_inicial.md).

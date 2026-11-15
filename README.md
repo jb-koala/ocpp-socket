@@ -17,7 +17,7 @@ sepan dónde mirar. Las reglas de trabajo para el agente están en [CLAUDE.md](C
 | [`hw/`](hw/) | Electrónica en KiCad 10 (texto plano). Una carpeta por placa y revisión | 3 |
 | [`bom/`](bom/) | Lista de materiales con códigos de pedido, masa, potencia y costo por parte | 5 |
 | [`fab/`](fab/) | Configuración de KiBot para generar gerbers, BOM y posiciones desde un YAML | 6 |
-| [`firmware/`](firmware/) | Firmware ESP-IDF (PlatformIO). Lógica pura en `lib/`, testeable en laptop | 7 |
+| [`firmware/`](firmware/) | Firmware de campo (Arduino + MicroOcpp, PlatformIO). Lógica pura nueva en `lib/`, testeable en laptop | 7 |
 | [`bench/`](bench/) | Tests en hardware real (pytest-embedded), scripts de flash y de bench | 8 |
 | [`data/`](data/) | Corridas registradas (MCAP). No se commitean los archivos grandes | 9 |
 | [`tests/`](tests/) | Tests de proyecto (pytest): presupuestos, requerimientos, consistencia | 1, 5 |
