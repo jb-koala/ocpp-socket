@@ -653,7 +653,12 @@ void setup() {
                   globalOcppUrl.c_str(), cleanOcppUrl.c_str(), globalChargePointId.c_str());
 
     mocpp_initialize(cleanOcppUrl.c_str(), globalChargePointId.c_str(), CHARGE_POINT_MODEL,
-                     CHARGE_POINT_VENDOR, FIRMWARE_VERSION);
+                     CHARGE_POINT_VENDOR);
+    // La versión de firmware viaja en BootNotification.firmwareVersion vía FirmwareService
+    // (API oficial de MicroOcpp; la copia del Arduino IDE la pasaba como 5.º argumento).
+    if (auto *fwSvcVer = getFirmwareService()) {
+      fwSvcVer->setBuildNumber(FIRMWARE_VERSION);
+    }
 
     // Logs Específicos para el control remoto
     setOnReceiveRequest("RemoteStartTransaction", [](JsonObject payload) {

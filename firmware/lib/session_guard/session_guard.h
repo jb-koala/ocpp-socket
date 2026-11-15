@@ -2,7 +2,7 @@
 // power-block temperature (REQ004). Pure logic, no hardware or RTOS deps, so it
 // runs identically on the laptop (native tests) and on the ESP32-S3.
 //
-// Thresholds come from limits.h, generated from reqs/budgets.yml.
+// Thresholds come from sg_limits.h, generated from reqs/budgets.yml.
 #pragma once
 
 #include <stdbool.h>

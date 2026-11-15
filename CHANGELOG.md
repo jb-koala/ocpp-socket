@@ -39,3 +39,5 @@ Formato: fecha, área, qué cambió. Lo más nuevo arriba.
 - fw: el boot imprime `ocpp-socket fw commit=<hash> version=<v> board=<placa>` y `READY`.
 - ci: job `firmware-build` compila `esp32s3` con PlatformIO y sube el `.bin` como artefacto.
 - hw: `mainboard-revA/pinout.md` como plantilla a completar.
+- fw: `mocpp_initialize` pasa a la firma oficial de 4 argumentos; la versión va por
+  `FirmwareService::setBuildNumber`. MicroOcpp pineado a `main#ee1271b`. `limits.h` → `sg_limits.h`.
