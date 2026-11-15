@@ -1,6 +1,6 @@
 # 0007. Reemplazar el 7805 lineal por un buck 12 V → 3.3 V
 
-- Status: proposed
+- Status: accepted (JB, 2026-11-15)
 - Date: 2026-11-15
 - Deciders: JB, Gabriel
 - Requirements: REQ009
@@ -19,7 +19,7 @@ necesita disipador y tornillo (piezas de montaje manual).
 
 ## Decisión
 
-Pendiente. Propuesta: **opción 2** junto con 0005 (el WROOM necesita 3.3 V directo). Mantiene el
+**Opción 2** (aceptada por JB el 2026-11-15) junto con 0005 (el WROOM necesita 3.3 V directo). Mantiene el
 relé de 12 V (mejor par de contacto que 5 V) y elimina el disipador.
 
 ## Consecuencias

@@ -1,0 +1,29 @@
+(version 1)
+# Reglas de diseño para JLCPCB 2 capas, 2 oz, más la barrera de aislación red/SELV.
+# Se cargan en KiCad: Board Setup > Design Rules > Custom Rules.
+
+(rule "jlc_min_track"
+  (constraint track_width (min 0.2mm)))
+
+(rule "jlc_min_clearance"
+  (constraint clearance (min 0.2mm)))
+
+(rule "jlc_min_via"
+  (constraint via_diameter (min 0.5mm))
+  (constraint hole_size (min 0.3mm)))
+
+# Camino de 10 A: pistas de potencia de la clase "MAINS_10A" con ancho mínimo 6 mm (2 oz, +10 °C).
+(rule "mains_10A_width"
+  (condition "A.NetClass == 'MAINS_10A'")
+  (constraint track_width (min 6mm)))
+
+# Barrera reforzada 250 V: entre cualquier cobre de clase MAINS* y cualquier cobre SELV, ≥ 6.4 mm.
+(rule "isolation_barrier"
+  (condition "A.NetClass == 'MAINS_10A' || A.NetClass == 'MAINS_AUX'")
+  (constraint clearance (min 6.4mm))
+  (condition "B.NetClass != 'MAINS_10A' && B.NetClass != 'MAINS_AUX'"))
+
+# Dentro del lado de red (L–N) alcanza con clearance básico 3 mm.
+(rule "mains_basic"
+  (condition "A.NetClass == 'MAINS_10A' && B.NetClass == 'MAINS_AUX'")
+  (constraint clearance (min 3mm)))

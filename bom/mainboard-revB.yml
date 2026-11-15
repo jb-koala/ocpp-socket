@@ -1,0 +1,451 @@
+# BOM estimada de rev B, derivada del diseño por bloques. order_code TBD hasta que exista el esquemático.
+# Supercap (C-SC) con costo 0: footprint sin poblar hasta aceptar decisions/0004.
+# NOTA: tests/test_budgets.py exige una entrada mainboard-revB en reqs/budgets.yml (pendiente de aprobación de JB).
+board: mainboard-revB
+source: hw/mainboard-revB/README.md (diseño por bloques, 2026-11-15)
+currency: USD
+quantity_basis: 100
+cost_note: Estimaciones a precio LCSC/JLCPCB por 100 u. Se reemplazan por los reales al cerrar el esquemático. Masa y consumo
+  en reposo estimados.
+parts:
+- ref: TB1
+  part: HB9500-9.5 bornera 3P 9.5mm
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 6 g
+  cost: 0.500 USD
+  power_idle: 0 W
+  note: Entrada L/N/PE (rev A)
+- ref: F1
+  part: Fusible 5x20 0.5A T + 2 clips
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 2 g
+  cost: 0.070 USD
+  power_idle: 0 W
+  note: Ramal auxiliar (rev A)
+- ref: VR1
+  part: S07K275 varistor
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 1 g
+  cost: 0.110 USD
+  power_idle: 0 W
+  note: rev A
+- ref: L1
+  part: Choke CM 2x10mH UU9.8
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 5 g
+  cost: 0.100 USD
+  power_idle: 0 W
+  note: rev A
+- ref: C2
+  part: 100nF X1 275Vac MKP
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 2 g
+  cost: 0.060 USD
+  power_idle: 0 W
+  note: rev A
+- ref: C1,C5
+  part: 2n2 Y1 3kV
+  qty: 2
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 1 g
+  cost: 0.050 USD
+  power_idle: 0 W
+  note: rev A
+- ref: PS1
+  part: HLK-10M12 12V 10W
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 25 g
+  cost: 2.270 USD
+  power_idle: 0.4 W
+  note: rev A, aislación reforzada
+- ref: U3
+  part: Buck 12V→3.3V 2A SOT-23-6 (AP63203 o eq.)
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 0.1 g
+  cost: 0.250 USD
+  power_idle: 0.05 W
+  note: '0007'
+- ref: L2
+  part: Inductor 4.7uH escudado 2A
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 0.5 g
+  cost: 0.080 USD
+  power_idle: 0 W
+  note: buck
+- ref: C-BUCK
+  part: 10uF + 2x22uF 0805/1206
+  qty: 3
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 0.1 g
+  cost: 0.030 USD
+  power_idle: 0 W
+  note: buck in/out
+- ref: C4
+  part: 470uF 16V electrolítico
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 2 g
+  cost: 0.050 USD
+  power_idle: 0 W
+  note: rev A, reserva 12V
+- ref: D4
+  part: SS14 schottky
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 0.1 g
+  cost: 0.020 USD
+  power_idle: 0 W
+  note: inversa entrada buck
+- ref: F2
+  part: PTC resettable 500mA
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 0.2 g
+  cost: 0.050 USD
+  power_idle: 0 W
+  note: 3V3 a expansión
+- ref: U2
+  part: ESP32-S3-WROOM-1-N16R8
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 3.5 g
+  cost: 3.600 USD
+  power_idle: 0.55 W
+  note: '0005'
+- ref: J-USB
+  part: USB-C 16p + 2x5k1 + USBLC6-2SC6
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 1 g
+  cost: 0.250 USD
+  power_idle: 0 W
+  note: flash/logs
+- ref: SW-BOOT,SW-EN
+  part: Tact switch SMD
+  qty: 2
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 0.1 g
+  cost: 0.020 USD
+  power_idle: 0 W
+  note: ''
+- ref: C-MCU
+  part: 10uF + 100nF decoupling WROOM
+  qty: 2
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 0.05 g
+  cost: 0.020 USD
+  power_idle: 0 W
+  note: ''
+- ref: J-DBG
+  part: Header 1x4 2.54
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 0.3 g
+  cost: 0.030 USD
+  power_idle: 0 W
+  note: ''
+- ref: K1
+  part: SFK112DM relé 20A 12V
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 18 g
+  cost: 3.700 USD
+  power_idle: 0 W
+  note: rev A
+- ref: Q1
+  part: BC817 + 1N4148 + R
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 0.05 g
+  cost: 0.030 USD
+  power_idle: 0 W
+  note: driver relé
+- ref: SNUB
+  part: 100R 2W + 100nF X2
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 1 g
+  cost: 0.120 USD
+  power_idle: 0 W
+  note: snubber contactos, opcional
+- ref: J-ESTOP
+  part: Bornera 2P 5.08
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 1 g
+  cost: 0.060 USD
+  power_idle: 0 W
+  note: e-stop en serie con bobina
+- ref: SW1
+  part: Botón de emergencia NC hongo 22mm
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 30 g
+  cost: 1.500 USD
+  power_idle: 0 W
+  note: REQ005, montado en caja
+- ref: U4
+  part: ATM90E26 SSOP-28
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 0.3 g
+  cost: 1.400 USD
+  power_idle: 0.01 W
+  note: 0006/0009
+- ref: Y1
+  part: Cristal 16.384MHz + 2x22pF
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 0.2 g
+  cost: 0.150 USD
+  power_idle: 0 W
+  note: ATM90E26
+- ref: T1
+  part: ZMCT102 CT
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 8 g
+  cost: 0.370 USD
+  power_idle: 0 W
+  note: rev A
+- ref: TR1
+  part: ZMPT101L VT
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 10 g
+  cost: 0.100 USD
+  power_idle: 0.1 W
+  note: rev A
+- ref: R4,R5
+  part: 56K 0.5W metal film
+  qty: 2
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 0.3 g
+  cost: 0.010 USD
+  power_idle: 0.002 W
+  note: primario VT (rev A)
+- ref: R-METER,C-METER
+  part: Burden + filtros RC canal I y V
+  qty: 8
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 0.02 g
+  cost: 0.010 USD
+  power_idle: 0 W
+  note: ''
+- ref: TH1
+  part: NTC 10k B3950 con cable + JST-XH 2P
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 2 g
+  cost: 0.150 USD
+  power_idle: 0 W
+  note: REQ003 bornes de toma
+- ref: TH2
+  part: NTC 10k 0603
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 0.01 g
+  cost: 0.020 USD
+  power_idle: 0 W
+  note: junto a K1
+- ref: Q5
+  part: AO3400 + SS14
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 0.05 g
+  cost: 0.050 USD
+  power_idle: 0 W
+  note: driver solenoide
+- ref: J-LOCK
+  part: JST-XH 3P
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 0.3 g
+  cost: 0.030 USD
+  power_idle: 0 W
+  note: solenoide + sense
+- ref: SOL1
+  part: Solenoide 12V bistable/pulso (en tapa)
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 40 g
+  cost: 2.500 USD
+  power_idle: 0 W
+  note: REQ006, modelo a definir en bench
+- ref: C-SC
+  part: Supercap 1F 5.5V (NO POBLAR hasta 0004)
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 0 g
+  cost: 0.000 USD
+  power_idle: 0 W
+  note: footprint solamente
+- ref: PB1
+  part: QN12-L1-RGB pulsador RGB
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 8 g
+  cost: 2.000 USD
+  power_idle: 0.05 W
+  note: rev A
+- ref: Q2,Q3,Q4,Q6
+  part: BC817
+  qty: 4
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 0.02 g
+  cost: 0.010 USD
+  power_idle: 0 W
+  note: LEDs RGB + buzzer
+- ref: BZ1
+  part: Buzzer 5V 12mm
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 2 g
+  cost: 0.550 USD
+  power_idle: 0 W
+  note: rev A
+- ref: J-PB
+  part: JST-XH 5P
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 0.4 g
+  cost: 0.040 USD
+  power_idle: 0 W
+  note: pulsador en tapa
+- ref: J-EXP
+  part: Header 2x8 2.54
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 1 g
+  cost: 0.050 USD
+  power_idle: 0 W
+  note: REQ007
+- ref: R-MISC
+  part: Resistencias 0603 varias
+  qty: 40
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 0.01 g
+  cost: 0.003 USD
+  power_idle: 0 W
+  note: ''
+- ref: C-MISC
+  part: Capacitores 0603 varios
+  qty: 20
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 0.01 g
+  cost: 0.005 USD
+  power_idle: 0 W
+  note: ''
+- ref: TP
+  part: Test points 1.5mm
+  qty: 10
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 0 g
+  cost: 0.000 USD
+  power_idle: 0 W
+  note: fixture EOL
+- ref: SKT1
+  part: Toma IP universal 10A
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 60 g
+  cost: 0.380 USD
+  power_idle: 0 W
+  note: rev A
+- ref: J-SKT
+  part: Faston 6.3mm x3 + terminales
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 3 g
+  cost: 0.240 USD
+  power_idle: 0 W
+  note: rev A
+- ref: PCB
+  part: FR4 2 capas 100x80 2oz
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 45 g
+  cost: 1.200 USD
+  power_idle: 0 W
+  note: ''
+- ref: WIRES
+  part: Cable 2.5mm2 x3 x200mm
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 30 g
+  cost: 0.500 USD
+  power_idle: 0 W
+  note: ''
+- ref: BOX
+  part: GENROD IP65 115x165x65
+  qty: 1
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 250 g
+  cost: 2.000 USD
+  power_idle: 0 W
+  note: rev A
+- ref: SUPPORTS
+  part: Separadores nylon
+  qty: 4
+  supplier: JLCPCB
+  order_code: TBD
+  mass: 0.5 g
+  cost: 0.050 USD
+  power_idle: 0 W
+  note: ''
