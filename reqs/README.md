@@ -11,4 +11,4 @@ doorstop publish all docs/reqs.html
 ```
 
 `budgets.yml` son los números duros del producto. Los lee `tests/test_budgets.py` y el firmware
-(los umbrales de seguridad se generan a `firmware/lib/session_guard/limits.h` con `make limits`).
+(los umbrales de seguridad se generan a `firmware/lib/session_guard/sg_limits.h` con `make limits`).

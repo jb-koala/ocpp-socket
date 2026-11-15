@@ -11,7 +11,7 @@ src/                 firmware de campo. El .ino lo compila PlatformIO directamen
   LedController.*           NeoPixel por estados (no usado aún por el .ino)
   RelayController.*         relé (no usado aún por el .ino)
   Version.h                 FIRMWARE_VERSION
-lib/session_guard/   lógica pura nueva (guarda de temperatura, REQ004). limits.h se GENERA desde reqs/budgets.yml
+lib/session_guard/   lógica pura nueva (guarda de temperatura, REQ004). sg_limits.h se GENERA desde reqs/budgets.yml
 test/                tests Unity de lib/. Corren en laptop (env native)
 docs/                sensado de corriente, OLED, guía de flasheo inicial, lecciones aprendidas
 legacy/              BOM del prototipo en devkit y log de referencia de una carga OK

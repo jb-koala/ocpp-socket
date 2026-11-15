@@ -1,5 +1,5 @@
 #include "session_guard.h"
-#include "limits.h"
+#include "sg_limits.h"
 
 void sg_init(sg_t *g, uint32_t now_ms) {
     g->state = SG_STATE_OK;
