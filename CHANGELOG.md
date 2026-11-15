@@ -41,3 +41,4 @@ Formato: fecha, área, qué cambió. Lo más nuevo arriba.
 - hw: `mainboard-revA/pinout.md` como plantilla a completar.
 - fw: `mocpp_initialize` pasa a la firma oficial de 4 argumentos; la versión va por
   `FirmwareService::setBuildNumber`. MicroOcpp pineado a `main#ee1271b`. `limits.h` → `sg_limits.h`.
+- fw: `board_fluxio_revb.h` con el pinout de rev B (hw/mainboard-revB/pinout.md).
