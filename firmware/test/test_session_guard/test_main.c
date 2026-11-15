@@ -1,7 +1,7 @@
 // Native tests for session_guard (REQ004). Run: pio test -e native
 #include <unity.h>
 #include "session_guard.h"
-#include "limits.h"
+#include "sg_limits.h"
 
 static sg_t g;
 

@@ -48,4 +48,5 @@ jobs:
       options: --user root
     steps:
       - uses: actions/checkout@v4
+      - run: apt-get update -qq && apt-get install -y -qq make >/dev/null
       - run: make hw-check

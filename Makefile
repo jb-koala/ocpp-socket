@@ -11,7 +11,7 @@ test:                             ## pytest: presupuestos, BOM, requerimientos
 reqs:                             ## valida el árbol Doorstop
 	cd reqs && doorstop
 
-limits:                           ## regenera firmware/lib/session_guard/limits.h desde reqs/budgets.yml
+limits:                           ## regenera firmware/lib/session_guard/sg_limits.h desde reqs/budgets.yml
 	$(PY) firmware/scripts/gen_limits.py > /dev/null
 
 fw-test: limits                   ## tests Unity en laptop
