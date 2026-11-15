@@ -1,6 +1,6 @@
 # 0005. Reemplazar el DevKitC por un módulo ESP32-S3-WROOM-1 soldado en la placa
 
-- Status: proposed
+- Status: accepted (JB, 2026-11-15)
 - Date: 2026-11-15
 - Deciders: JB, Gabriel
 - Requirements: REQ009, REQ012, REQ014
@@ -20,7 +20,7 @@ el módulo de radio: conviene uno con certificación modular (WROOM-1 la tiene; 
 
 ## Decisión
 
-Pendiente. Propuesta: **opción 2** en rev B. Ahorro estimado USD 6-10 por unidad, menos piezas, y
+**Opción 2** en rev B (aceptada por JB el 2026-11-15). Ahorro estimado USD 6-10 por unidad, menos piezas, y
 camino de homologación más corto.
 
 ## Consecuencias

@@ -1,6 +1,6 @@
 # 0006. Medición de energía con IC dedicado para llegar a clase 1
 
-- Status: proposed
+- Status: accepted (JB, 2026-11-15)
 - Date: 2026-11-15
 - Deciders: JB, Gabriel
 - Requirements: REQ011, REQ014
@@ -19,7 +19,7 @@ sensible a temperatura; llegar a 1 % con él es posible pero costoso en calibrac
 
 ## Decisión
 
-Pendiente. Propuesta: **opción 2** con un IC que ya tenga historial en medidores clase 1 (ATM90E26 o
+**Opción 2** (aceptada por JB el 2026-11-15) con un IC que ya tenga historial en medidores clase 1 (ATM90E26 o
 BL0940), manteniendo el CT para aislación. Se valida en bench contra un patrón clase 0.5 antes de
 aceptar.
 

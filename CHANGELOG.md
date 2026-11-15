@@ -27,3 +27,11 @@ Formato: fecha, área, qué cambió. Lo más nuevo arriba.
 - decisions: 0008 mantener Arduino + MicroOcpp sobre PlatformIO (aclara 0001).
 - docs: 002-auditoria-firmware.md con hallazgos P0/P1/P2 y el desfasaje firmware ↔ PCB.
 - hook: también bloquea `arduino-cli upload`.
+
+## 2026-11-15 (5) — branch hw/revb-diseno
+
+- decisions: 0005, 0006, 0007 aceptadas por JB; 0009 topología de medición aislada (ATM90E26 + CT/VT).
+- hw: `mainboard-revB/README.md` diseño por bloques (10 bloques, qué se conserva de rev A y qué cambia),
+  `pinout.md` asignación completa de GPIO del WROOM-1 y conectores, `jlcpcb.kicad_dru` con la barrera de 6.4 mm.
+- bom: `mainboard-revB.yml` estimada (~USD 25 China, ~565 g, ~1.2 W en reposo).
+- reqs: entrada `mainboard-revB` en `budgets.yml` (650 g, 1.5 W, 40 USD), aprobada por JB.

@@ -7,6 +7,11 @@ mainboard-revA:
   idle_power: "2.5 W"      # en reposo, Wi-Fi conectado, relé abierto (MVP estimado 1.85 W; el 7805 lineal pesa ~0.7 W)
   bom_cost:   "40 USD"     # componentes a 50-100 u, precios China, con PCB y caja, sin traba ni armado (MVP: ~26 USD)
 
+mainboard-revB:                  # aprobado por JB el 2026-11-15 (PR #2)
+  mass:       "650 g"
+  idle_power: "1.5 W"      # objetivo con buck y WROOM (rev A: ~1.85 W con el 7805)
+  bom_cost:   "40 USD"     # mismo techo que rev A; la estimación inicial da ~25 USD
+
 safety:
   temp_cutoff:  "85 degC"   # REQ004: por encima de esto se corta la sesión
   temp_resume:  "70 degC"   # se puede reanudar por debajo de esto
