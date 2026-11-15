@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: 'Traba de tapa segura ante falta de energía'
+level: 2.1
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  La traba de la tapa debe liberarse automáticamente si el socket pierde alimentación, para que el usuario pueda retirar el cable.
+verified_by: 'bench: cortar alimentación con tapa trabada y verificar liberación'

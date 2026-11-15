@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: 'Operación semi-offline'
+level: 3.1
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  Con el módulo SD, el socket debe autorizar tarjetas RFID de una lista local y registrar transacciones offline, sincronizándolas con el CSMS al reconectar.
+verified_by: 'bench: desconectar Wi-Fi, cargar con tarjeta de la lista, reconectar y verificar sync'

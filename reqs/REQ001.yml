@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: 'Protocolo'
+level: 1.0
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  El socket debe implementar OCPP 1.6-J (JSON sobre WebSocket seguro) como Charge Point, incluyendo BootNotification, Heartbeat, Authorize, StartTransaction, StopTransaction, MeterValues, RemoteStartTransaction, RemoteStopTransaction y UpdateFirmware.
+verified_by: 'firmware/test (native) + test de conformidad contra CSMS de prueba'

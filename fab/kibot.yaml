@@ -1,0 +1,77 @@
+# KiBot: genera todos los archivos de fabricación desde un YAML.
+#   kibot -c fab/kibot.yaml -e hw/mainboard-revA/mainboard-revA.kicad_sch -b hw/mainboard-revA/mainboard-revA.kicad_pcb -d fab/out/mainboard-revA
+kibot:
+  version: 1
+
+preflight:
+  run_erc: true
+  run_drc: true
+  check_zone_fills: true
+  update_xml: true
+  # Falla si alguna parte no tiene código de pedido (etapa 5 del flujo)
+  check_fields:
+    - field: LCSC
+      regex: '^C\d+$'
+      severity: error
+      filter: '-_only_smd_'
+
+filters:
+  - name: _only_smd_
+    type: generic
+    exclude_virtual: true
+    exclude_tht: true
+
+outputs:
+  - name: gerbers
+    type: gerber
+    dir: gerbers
+    options:
+      use_protel_extensions: true
+    layers: copper
+
+  - name: drill
+    type: excellon
+    dir: gerbers
+
+  - name: bom_jlc
+    type: bom
+    dir: .
+    options:
+      format: CSV
+      columns:
+        - field: References
+          name: Designator
+        - field: Value
+          name: Comment
+        - field: Footprint
+        - field: LCSC
+          name: "LCSC Part #"
+      csv:
+        hide_pcb_info: true
+        hide_stats_info: true
+        quote_all: true
+
+  - name: position
+    type: position
+    dir: .
+    options:
+      format: CSV
+      only_smd: true
+      separate_files_for_front_and_back: false
+      columns:
+        - id: Ref
+          name: Designator
+        - Val
+        - Package
+        - id: PosX
+          name: "Mid X"
+        - id: PosY
+          name: "Mid Y"
+        - id: Rot
+          name: Rotation
+        - id: Side
+          name: Layer
+
+  - name: schematic_pdf
+    type: pdf_sch_print
+    dir: .

@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: 'Puerto de expansión'
+level: 3.0
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  La mainboard debe exponer un puerto de expansión con SPI, I2C, UART, 3.3 V y 5 V para módulos opcionales (SD/RFID offline, LoRa, segundo MCU).
+verified_by: 'inspección de esquemático + test de continuidad en bench'

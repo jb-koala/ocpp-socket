@@ -1,0 +1,8 @@
+# docs/
+
+- `architecture.c4` — modelo de arquitectura en LikeC4. Es consultable (`npx likec4 start docs/`),
+  no un dibujo estático. Cuando cambia un bloque o una conexión, cambia acá primero.
+- `glossary.md` — términos del dominio (OCPP, CSMS, sesión, etc.).
+
+Notas de diseño largas van acá como `NNN-tema.md`. Las decisiones (con alternativas descartadas)
+van en `decisions/`, no acá.

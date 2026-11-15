@@ -1,0 +1,15 @@
+# Presupuestos del producto. Todas las cantidades llevan unidad (pint las parsea).
+# tests/test_budgets.py falla si la suma de bom/*.yml supera cualquiera de estos límites.
+# Cambiar un valor de acá requiere una decisión en decisions/ (ver CLAUDE.md §3).
+
+mainboard-revA:
+  mass:       "250 g"      # placa poblada, sin gabinete
+  idle_power: "2.5 W"      # consumo en reposo, conectado al CSMS, relé abierto
+  bom_cost:   "45 USD"     # costo de componentes a 100 unidades, sin PCB ni armado
+
+safety:
+  temp_cutoff:  "85 degC"   # REQ004: por encima de esto se corta la sesión
+  temp_resume:  "70 degC"   # se puede reanudar por debajo de esto
+  temp_hold:    "5 s"       # tiempo sostenido sobre temp_cutoff antes de cortar
+  temp_cooldown: "120 s"    # espera mínima después de un corte antes de reanudar
+  max_current:  "16 A"      # corriente máxima habilitada por el relé

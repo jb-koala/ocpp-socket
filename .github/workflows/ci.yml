@@ -1,0 +1,29 @@
+name: check
+on: [push, pull_request]
+
+jobs:
+  project-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install pytest pyyaml pint
+      - run: make limits
+      - run: make test
+
+  firmware-native:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install platformio pyyaml pint
+      - run: make fw-test
+
+  hardware-check:
+    runs-on: ubuntu-latest
+    container: kicad/kicad:10.0
+    steps:
+      - uses: actions/checkout@v4
+      - run: make hw-check

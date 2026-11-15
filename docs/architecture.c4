@@ -1,0 +1,85 @@
+// Modelo de arquitectura en LikeC4 (https://likec4.dev).
+// Es un modelo que el agente puede consultar y validar, no un dibujo.
+// Ver con: npx likec4 start docs/
+
+specification {
+  element system
+  element device
+  element board
+  element component
+  element external
+  relationship talks
+  relationship powers
+}
+
+model {
+  csms = external 'CSMS (backend OCPP)' {
+    description 'Servidor central. Habla OCPP 1.6-J por WebSocket.'
+  }
+
+  grid = external 'Red 220 V' {
+    description 'Alimentación monofásica del edificio.'
+  }
+
+  ev = external 'Vehículo eléctrico' {
+    description 'Se conecta por cable Tipo 2 / Schuko según variante.'
+  }
+
+  socket = system 'OCPP Socket' {
+    description 'Toma de carga inteligente con lógica OCPP a bordo.'
+
+    mainboard = board 'Mainboard rev A' {
+      description 'KiCad: hw/mainboard-revA'
+
+      mcu = component 'ESP32-S3' {
+        description 'Corre el firmware: OCPP, sesión, OTA, telemetría.'
+      }
+      psu = component 'Fuente auxiliar 220 V → 5 V / 3.3 V'
+      relay = component 'Relé / contactor de potencia' {
+        description 'Habilita o corta la carga.'
+      }
+      meter = component 'Medidor de energía' {
+        description 'Tensión, corriente, energía acumulada.'
+      }
+      temp = component 'Sensor de temperatura' {
+        description 'Sobre el bloque de potencia. Reporta en OCPP; corta la sesión por sobre umbral.'
+      }
+      lock = component 'Traba de tapa' {
+        description 'Servo hoy; propuesta: solenoide + supercap con liberación al perder energía.'
+      }
+      estop = component 'Botón de emergencia' {
+        description 'Corte físico, independiente del MCU.'
+      }
+      expansion = component 'Puerto de expansión' {
+        description 'Para SD / RFID offline / LoRa / segundo MCU.'
+      }
+    }
+
+    fw = device 'Firmware' {
+      description 'ESP-IDF vía PlatformIO. Lógica pura en firmware/lib.'
+    }
+  }
+
+  grid -[powers]-> socket.mainboard.psu
+  grid -[powers]-> socket.mainboard.relay
+  socket.mainboard.relay -[powers]-> ev
+  socket.mainboard.mcu -> socket.mainboard.relay 'habilita / corta'
+  socket.mainboard.meter -> socket.mainboard.mcu 'lecturas'
+  socket.mainboard.temp -> socket.mainboard.mcu 'temperatura'
+  socket.mainboard.mcu -> socket.mainboard.lock 'abre / cierra'
+  socket.mainboard.estop -> socket.mainboard.relay 'corte físico'
+  socket.mainboard.mcu -> socket.mainboard.expansion 'SPI / UART / I2C'
+  socket.fw -[talks]-> csms 'OCPP 1.6-J sobre WSS (Wi-Fi)'
+}
+
+views {
+  view index {
+    title 'OCPP Socket — contexto'
+    include *
+  }
+
+  view mainboard of socket.mainboard {
+    title 'Mainboard rev A'
+    include *
+  }
+}

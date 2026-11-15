@@ -1,0 +1,7 @@
+settings:
+  digits: 3
+  prefix: REQ
+  sep: ''
+attributes:
+  defaults:
+    verified_by: ''

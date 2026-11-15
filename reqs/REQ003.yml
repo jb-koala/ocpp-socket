@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: 'Telemetría de temperatura'
+level: 1.2
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  El socket debe medir la temperatura del bloque de potencia (relé / bornes) y reportarla en cada MeterValues con measurand Temperature.
+verified_by: 'bench: leer MeterValues y verificar el campo'

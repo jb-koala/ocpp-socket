@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: 'Corte por temperatura'
+level: 1.3
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  Si la temperatura del bloque de potencia supera T_CUTOFF (ver reqs/budgets.yml, safety.temp_cutoff) durante más de T_HOLD, el MCU debe detener la transacción y abrir el relé sin esperar al CSMS. La carga no se rehabilita hasta que la temperatura baje de T_RESUME y pase T_COOLDOWN.
+verified_by: 'firmware/lib/session_guard tests (native) + bench con calentador'

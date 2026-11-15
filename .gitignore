@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# PlatformIO
+firmware/.pio/
+firmware/.vscode/
+firmware/sdkconfig.*
+!firmware/sdkconfig.defaults
+
+# KiCad
+hw/**/*-backups/
+hw/**/*.kicad_prl
+hw/**/fp-info-cache
+hw/**/*.lck
+hw/**/_autosave-*
+fab/out/
+
+# Datos de corridas (grandes). Se guardan en el store de logs, no en git.
+data/runs/**/*.mcap
+data/runs/**/*.bin
+
+# OS
+.DS_Store

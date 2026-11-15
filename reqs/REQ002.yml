@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: 'OTA'
+level: 1.1
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  El firmware debe poder actualizarse de forma remota vía OCPP UpdateFirmware, con rollback automático si la imagen nueva no confirma el boot dentro de 60 s.
+verified_by: 'bench: flashear imagen rota y verificar rollback'

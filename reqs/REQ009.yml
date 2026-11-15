@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: 'Presupuestos físicos'
+level: 4.0
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  La mainboard debe respetar los presupuestos de masa, potencia en reposo y costo de BOM definidos en reqs/budgets.yml.
+verified_by: 'pytest tests/test_budgets.py'

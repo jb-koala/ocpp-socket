@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: 'Botón de emergencia'
+level: 2.0
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  Debe existir un botón de emergencia que corte la potencia de forma física, sin depender del MCU ni del firmware.
+verified_by: 'inspección de esquemático: el circuito del botón no pasa por el MCU'

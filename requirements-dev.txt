@@ -1,0 +1,6 @@
+pytest>=8
+pyyaml>=6
+pint>=0.24
+doorstop>=3
+kibot>=1.8
+platformio>=6

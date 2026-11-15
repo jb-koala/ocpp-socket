@@ -1,0 +1,85 @@
+# BOM de mainboard rev A. Una entrada por parte distinta.
+# Campos obligatorios: ref, part, qty, order_code (JLCPCB "Cxxxxx" u otro proveedor), mass, cost, power_idle.
+# tests/test_bom.py falla si falta un campo; tests/test_budgets.py suma mass/cost/power_idle contra reqs/budgets.yml.
+# Los valores iniciales son estimaciones; se reemplazan por los reales cuando el esquemático esté cerrado.
+
+board: mainboard-revA
+currency: USD
+quantity_basis: 100   # los costos unitarios son a esta cantidad
+
+parts:
+  - ref: U1
+    part: ESP32-S3-WROOM-1-N8R2
+    qty: 1
+    supplier: JLCPCB
+    order_code: C2913205
+    mass: "3.5 g"
+    cost: "3.20 USD"
+    power_idle: "0.6 W"
+    note: "Wi-Fi conectado, modem sleep"
+
+  - ref: PS1
+    part: "Fuente AC/DC 220 V → 5 V 2 A (módulo)"
+    qty: 1
+    supplier: JLCPCB
+    order_code: TBD
+    mass: "25 g"
+    cost: "4.50 USD"
+    power_idle: "0.5 W"
+    note: "pérdidas en vacío"
+
+  - ref: K1
+    part: "Relé 16 A 250 VAC, bobina 5 V"
+    qty: 1
+    supplier: JLCPCB
+    order_code: TBD
+    mass: "18 g"
+    cost: "1.80 USD"
+    power_idle: "0 W"
+    note: "en reposo abierto; 0.45 W con bobina activa durante la carga"
+
+  - ref: U2
+    part: "Medidor de energía (p. ej. HLW8032 / BL0937)"
+    qty: 1
+    supplier: JLCPCB
+    order_code: TBD
+    mass: "1 g"
+    cost: "0.90 USD"
+    power_idle: "0.05 W"
+
+  - ref: TH1
+    part: "NTC 10k 3950 con cable, sobre bornes"
+    qty: 1
+    supplier: JLCPCB
+    order_code: TBD
+    mass: "2 g"
+    cost: "0.30 USD"
+    power_idle: "0 W"
+
+  - ref: SW1
+    part: "Botón de emergencia (hongo) NC"
+    qty: 1
+    supplier: local
+    order_code: TBD
+    mass: "30 g"
+    cost: "3.00 USD"
+    power_idle: "0 W"
+
+  - ref: J1
+    part: "Puerto de expansión 2x8 2.54 mm"
+    qty: 1
+    supplier: JLCPCB
+    order_code: TBD
+    mass: "2 g"
+    cost: "0.20 USD"
+    power_idle: "0 W"
+
+  - ref: PCB
+    part: "PCB 2 capas 100x80 mm"
+    qty: 1
+    supplier: JLCPCB
+    order_code: n/a
+    mass: "40 g"
+    cost: "0 USD"
+    power_idle: "0 W"
+    note: "costo de PCB excluido de bom_cost por definición en budgets.yml"
