@@ -7,5 +7,5 @@ normative: true
 ref: ''
 reviewed: null
 text: |
-  El diseño debe poder certificarse bajo esquema CB vía IRAM (alcance a confirmar: IEC 61851-1 y/o IEC 62752, seguridad de tomacorriente y electrónica), con homologación ENACOM del módulo Wi-Fi y medición apta para facturación.
-verified_by: 'pre-compliance (seguridad eléctrica, EMC, térmico) antes de presentar'
+  El diseño debe poder certificarse bajo esquema CB (IECEE) con un laboratorio reconocido, y registrarse en Argentina bajo el Reglamento Técnico de Seguridad Eléctrica (Res. SIyC 16/2025, vigencia 2 años) y en ENACOM/RAMATEL (Res. 57/2026) para el módulo Wi-Fi. La clasificación de producto (tomacorriente controlado IEC 60884-1 + IEC 60669-2-1, o EVSE IEC 61851-1) se confirma por escrito en la consulta de alcance antes del ensayo formal. El manual de instalación debe referir a AEA 90364-7-722:2024.
+verified_by: 'pre-compliance completo (docs/003) antes de presentar; consulta de alcance por escrito'

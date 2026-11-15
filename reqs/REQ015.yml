@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: 'Calentamiento a corriente nominal'
+level: 5.1
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  Con 10 A continuos hasta estabilización térmica (≥ 1 h), la elevación de temperatura en los bornes del tomacorriente, en TB1 y en los contactos de K1 no debe superar 45 K sobre ambiente (IEC 60884-1 §19). El corte por temperatura (REQ004) no debe actuar durante este ensayo.
+verified_by: 'bench: ensayo 1 de docs/003 con 4 termocuplas, registrado en data/runs/'

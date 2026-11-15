@@ -27,3 +27,11 @@ Formato: fecha, área, qué cambió. Lo más nuevo arriba.
 - decisions: 0008 mantener Arduino + MicroOcpp sobre PlatformIO (aclara 0001).
 - docs: 002-auditoria-firmware.md con hallazgos P0/P1/P2 y el desfasaje firmware ↔ PCB.
 - hook: también bloquea `arduino-cli upload`.
+
+## 2026-11-15 (6) — branch docs/certificacion
+
+- docs: 003-certificacion-y-precompliance.md. La Res. 169/2018 que asumía el deck está derogada:
+  rige la Res. SIyC 16/2025 (acepta certificados CB, vigencia 2 años) y para radio la Res. ENACOM 57/2026.
+  Clasificación del producto, 14 ensayos de pre-compliance con criterio y equipo, registros posteriores.
+- reqs: REQ014 actualizado; REQ015 calentamiento ≤ 45 K; REQ016 aislación reforzada (3 kV, 6.4 mm).
+- decisions: 0010 tomacorriente IRAM 2071 vs universal (propuesta).
