@@ -71,7 +71,7 @@ Consumo en reposo objetivo: < 1.3 W (PS1 en vacío ~0.4 W + WROOM Wi-Fi ~0.5 W +
 |---|---|---|
 | K1 | SFK112DM 20 A 250 Vac, bobina 12 V | Se conserva. Permite la variante 20 A con toma y cableado acordes |
 | Q1 | BC817 + R base 1 kΩ + D flyback 1N4148 | Driver desde GPIO5. Pull-down 10 kΩ en base: relé abierto durante el boot |
-| **SW1** | **Botón de emergencia NC (hongo)**, cableado por bornera 2P | **En serie con la bobina de K1 (12 V)**: al pulsar, el relé abre sin pasar por el MCU. Sin tensión de red en el botón → no necesita 16 A ni aislación reforzada |
+| **SW1** | **Botón de emergencia compacto Ø16 NC**, en el lateral derecho de la caja, cableado por bornera 2P | **En serie con la bobina de K1 (12 V)**: al pulsar, el relé abre sin pasar por el MCU. Sin tensión de red en el botón → no necesita 16 A ni aislación reforzada |
 | — | Sense de SW1 → GPIO42 vía divisor | El firmware lo reporta en OCPP (`StatusNotification` Faulted / `EmergencyStop`) |
 | RC | Snubber 100 Ω + 100 nF X2 en paralelo a los contactos | Opcional, poblado según bench con cargadores Mode 2 (carga inductiva del contactor del vehículo) |
 
@@ -122,8 +122,9 @@ segundo ESP32 (UART).
 
 ### 10. Mecánica / fabricación
 
-- PCB 2 capas FR4 1.6 mm, cobre 2 oz en el camino de 10 A (o 1 oz con 6 mm de pista + estaño), 100 × 80 mm
-  para seguir entrando en la caja GENROD 115×165×65 con la toma.
+- PCB 2 capas FR4 1.6 mm, cobre 2 oz en el camino de 10 A (o 1 oz con 6 mm de pista + estaño), 100 × 80 mm,
+  **paralela a la pared detrás de la toma** en la caja v2 de 110 × 110 (decisión 0012). Las alturas
+  máximas por zona están en `keepouts.md`: bajo la toma solo 17 mm.
 - Ranura fresada bajo PS1, T1, TR1 y K1 en la barrera. Creepage ≥ 6.4 mm, clearance ≥ 3 mm.
 - Todo SMD salvo: K1, TB1, PS1, L1, C2/C1/C5 (X/Y), T1, TR1, C4, USB-C, headers. Lado SMD apto para JLCPCB
   assembly (parts de la biblioteca básica/extendida donde se pueda).

@@ -47,3 +47,14 @@ Formato: fecha, área, qué cambió. Lo más nuevo arriba.
 - bom: rev B con la caja impresa (370 g, USD 8.1) + tornillería (43 g, USD 2). Total 728 g / USD 33.5.
 - decisions: 0011 caja propia impresa en ASA.
 - **tests/test_budgets.py falla en masa (728 g > 650 g): decisión pendiente de JB.**
+
+## 2026-11-16 — caja v2 (branch mech/caja)
+
+- mech: caja rehecha al formato del plano de referencia de JB (decisión 0012): 110 × 110 × 82 + tapa de 40,
+  toma IRAM 2071 en pozo de 70 × 70, bisagra integrada arriba, clip abajo con traba por solenoide,
+  ojales 70 × 55, knockouts Ø20, patitas. RGB en el lateral izquierdo, emergencia Ø16 en el derecho.
+- mech: PCB rev B paralela a la pared detrás de la toma; 20 tests en verde. Masa ≈ 271 g (antes ≈ 367 g).
+- bom: caja v2 280 g / USD 6 + tornillería 35 g; botón de emergencia compacto Ø16. **Rev B: 630 g / USD 31.2
+  — el presupuesto de masa (650 g) vuelve a pasar sin cambiarlo.**
+- hw: keepouts.md reescrito para la PCB detrás de la toma (17 mm bajo la toma, 45 mm general).
+- decisions: 0012 caja compacta 110 × 110; 0011 superseded en formato.

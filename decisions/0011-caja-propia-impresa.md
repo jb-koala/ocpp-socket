@@ -1,6 +1,6 @@
 # 0011. Caja propia diseñada como código, impresa en ASA para el piloto
 
-- Status: accepted (JB, 2026-11-15)
+- Status: accepted (JB, 2026-11-15); formato y disposición superseded by 0012
 - Date: 2026-11-15
 - Deciders: JB
 - Requirements: REQ005, REQ006, REQ007, REQ013, REQ014, REQ016

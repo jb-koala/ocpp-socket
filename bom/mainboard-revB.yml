@@ -206,7 +206,7 @@ parts:
   power_idle: 0 W
   note: e-stop en serie con bobina
 - ref: SW1
-  part: Botón de emergencia NC hongo 22mm
+  part: Botón de emergencia compacto Ø16 NC (lateral derecho)
   qty: 1
   supplier: JLCPCB
   order_code: TBD
@@ -431,21 +431,21 @@ parts:
   power_idle: 0 W
   note: ''
 - ref: BOX
-  part: Caja propia impresa en ASA (mechanical/enclosure)
+  part: Caja propia v2 110x110 impresa en ASA (mechanical/enclosure)
   qty: 1
   supplier: impresión propia
   order_code: n/a
-  mass: 370 g
-  cost: 8.100 USD
+  mass: 280 g
+  cost: 6.000 USD
   power_idle: 0 W
-  note: base + frente + tapa + 2 bisagras + caja de traba + placa de toma; masa por tests (~367 g), filamento a USD 22/kg
+  note: base + marco + tapa + clip + placa de toma; masa por tests (~271 g), filamento a USD 22/kg
 - ref: BOX-HW
-  part: 'Tornillería y sellos de la caja: 4 insertos M4, 12 insertos M3, 4 M4x16, 12 M3, cordón 2.4 mm, pasador Ø3, imán 6x3, prensacable M20'
+  part: 'Tornillería y sellos de la caja v2: 12 insertos M3, 4 M3x10 (marco), 8 M3x6, cordón 2.0 mm, 2 pasadores Ø3 (bisagra y clip), imán 6x3, prensacable M20'
   qty: 1
   supplier: local/LCSC
   order_code: TBD
-  mass: 43 g
-  cost: 2.000 USD
+  mass: 35 g
+  cost: 1.800 USD
   power_idle: 0 W
   note: ver mechanical/enclosure/README.md
 - ref: SUPPORTS

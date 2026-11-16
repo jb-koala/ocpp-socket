@@ -1,81 +1,86 @@
-# Caja del OCPP Socket (CAD como código)
+# Caja del OCPP Socket v2 — 110 × 110 (CAD como código)
 
-Caja propia según el boceto de JB: frente con toma empotrada, **tapa con bisagra que cierra con la
-ficha enchufada** (el cable sale por una muesca abajo), pulsador RGB en el lateral izquierdo y botón de
-emergencia en el frente. Decisión: [0011](../../decisions/0011-caja-propia-impresa.md).
+Caja compacta según el plano de referencia de JB (decisión [0012](../../decisions/0012-caja-compacta-110.md)):
+cuerpo 110 × 110 × 82, tapa ahumada de 40 mm (122 en total), toma IRAM 2071 en un pozo de 70 × 70,
+bisagra arriba, clip abajo, ojales a 70 × 55, knockouts Ø20, paredes de 2.5 mm.
+Pulsador RGB en el lateral izquierdo y botón de emergencia compacto Ø16 en el derecho.
 
-Todo sale de dos archivos: `params.py` (cada medida, con las que vienen de piezas reales marcadas
-**CONFIRM**) y `enclosure.py` (la geometría, build123d). `mechanical/tests/test_enclosure.py` verifica
-22 reglas físicas en cada cambio.
+Todo sale de `params.py` (medidas: **DRAWING** = del plano, **CONFIRM** = de una pieza real a medir) y
+`enclosure.py` (geometría, build123d). `mechanical/tests/test_enclosure.py` verifica 20 reglas físicas.
 
-| Cerrada | Tapa abierta con ficha | Despiece | Corte |
+| Cerrada | Tapa y clip abiertos, con ficha | Despiece | Corte |
 |---|---|---|---|
 | ![](renders/01_cerrada.png) | ![](renders/02_tapa_abierta_con_ficha.png) | ![](renders/03_explosion.png) | ![](renders/04_corte.png) |
 
-## Comandos
-
 ```bash
 pip install build123d trimesh matplotlib pyyaml pytest
-make mech          # exporta STL (ya orientados para imprimir) + STEP del conjunto a out/, y regenera renders/
-make mech-test     # los 22 chequeos (interferencias, holguras, junta, traba, cama, masa vs BOM)
+make mech        # STL orientados para imprimir + STEP del conjunto en out/, renders en renders/
+make mech-test   # 20 chequeos
 ```
 
-CI corre los tests y sube los STL/STEP como artefacto de cada build.
+## Cómo está armada
+
+```
+ pared │ base (70) ──────────────────────────┤ marco (12) │ tapa (40)
+       │ PCB 100×80 paralela a la pared      │ pozo 70×70 │ hood ahumado, bisagra arriba
+       │ (zonas de altura según lo que tiene  │ toma IRAM  │
+       │  encima: ver keepouts de rev B)      │ 2071       │
+       │ RGB ◄ lateral izq.   lateral der. ► emergencia Ø16
+       │ prensacable M20 abajo · solenoide en su cuna abajo, pistón hacia abajo → clip
+```
+
+- **PCB detrás de la toma**: en 110 × 110 no entra al lado. La placa queda a 6 mm de la pared; arriba
+  tiene el cuerpo de la toma (zona baja de 17 mm) y alrededor hasta 45 mm.
+- **Clip**: pivota bajo la base, sus dos brazos corren bajo la tapa y el gancho abraza el borde
+  inferior del frente de la tapa. El cable de la ficha baja por la muesca de la tapa y pasa entre los brazos.
+- **Traba (REQ006)**: el solenoide está adentro, en una cuna sobre el piso de la base; el pistón sale
+  hacia abajo (no entra agua) y entra en el brazo derecho del clip. Clip trabado = tapa trabada.
+  Sensor Hall + imán en el clip para saber si está cerrado.
+- **Canal de desagüe**: del fondo del pozo al borde inferior, con paredes a 45° (el agua sale por abajo).
 
 ## Piezas e impresión (FDM, sin soportes)
 
-| Pieza | Cant. | Orientación en la cama | Tamaño en cama (mm) | Notas |
-|---|---|---|---|---|
-| `base` | 1 | fondo abajo | 130 × 190 × 40 | Standoffs PCB, ranura de junta, prensacable M20 (agujero en gota), agujero PB1 (en gota) |
-| `cover` | 1 | **frente abajo** | 130 × 190 × 30 | El pozo de la toma es un embudo a 45°: imprime sin soportes. Ceja interna con chaflán a 45° |
-| `lid` | 1 | frente abajo | 85 × 127 × 34 | Escuadra a 45° bajo la bisagra. Logo FLUXIO grabado 0.6 mm |
-| `hinge_bracket` | **2** | placa abajo | 23 × 9 × 9 | El mismo STL dos veces (el izquierdo es el derecho girado 180°) |
-| `lock_housing` | 1 | lado abierto abajo | 34 × 33 × 14 | Solenoide + sensor Hall; el pistón sale hacia abajo (no entra agua) |
-| `socket_insert` | 1 | plana | 80 × 86 × 3 | Adaptador para la toma elegida (decisión 0010); se atornilla desde adentro |
+| Pieza | Orientación | Cama (mm) | Notas |
+|---|---|---|---|
+| `base` | fondo abajo (sobre las patitas) | 110 × 120 × 72 | Agujeros laterales y del pistón en gota; orejas del clip y cuna con caras a 45° |
+| `cover` (marco) | frente abajo | 110 × 118 × 19 | Pozo en embudo, canal a 45°; el nudillo central de la bisagra apoya en la cama |
+| `lid` | frente abajo | 110 × 118 × 47 | Escuadras a 45° bajo los nudillos; logo grabado |
+| `clip` | brazos abajo | 30 × 66 × 19 | |
+| `socket_insert` | plana | 78 × 78 × 3 | Adaptador de la toma (decisión 0010), se atornilla desde adentro |
 
-Material: **ASA** (exterior, UV). PETG sirve para prototipos de banco. Para la tapa, PETG translúcido
-da el efecto "ahumado" del boceto; en inyección sería PC ahumado.
-Perfil sugerido: boquilla 0.4, capa 0.2, 5 perímetros, 30 % gyroid, 5 capas sup/inf.
-Masa impresa ≈ 367 g (≈ USD 8 de filamento).
+ASA para exterior; PETG translúcido para la tapa si se quiere el efecto ahumado.
+Boquilla 0.4, capa 0.2, 5 perímetros, 30 % gyroid. **Masa ≈ 271 g, filamento ≈ USD 6.**
 
 ## Tornillería y sellos (BOM: `BOX-HW`)
 
 | Ítem | Cant. | Dónde |
 |---|---|---|
-| Inserto termofijado M4 (Ø5.6 × 9) | 4 | Esquinas de la base (tornillos del frente) |
-| Inserto termofijado M3 corto (Ø4.0 × 5.5) | 12 | 4 standoffs PCB, 4 postes de la placa de toma, 2 caja de traba, 2 bisagras |
-| Tornillo M4 × 16 cabeza cilíndrica | 4 | Frente → base (en contrafrente, dentro de la junta) |
-| Tornillo M3 × 6 / × 8 | 12 | PCB, placa de toma, traba, bisagras |
-| Cordón EPDM/silicona Ø2.4 mm | ~620 mm | Ranura base/frente (25 % de compresión) |
-| Pasador acero Ø3 × 80 (o tornillo M3 × 80 + tuerca) | 1 | Bisagra |
-| Imán neodimio Ø6 × 3 | 1 | Tapa, frente al sensor Hall |
-| Prensacable M20 (cable Ø6–12) | 1 | Entrada de red, abajo |
-| Tarugos + tornillos Ø4–5 | 4 | Fijación a pared (avellanados desde adentro) |
+| Inserto termofijado M3 (Ø4.0 × 6) | 12 | 4 esquinas de la base, 4 standoffs PCB, 4 postes del pozo |
+| M3 × 10 cabeza cilíndrica | 4 | Marco → base, en contrafrente |
+| M3 × 6 | 8 | PCB y placa de toma |
+| Cordón EPDM/silicona Ø2.0 | ~400 mm | Ranura base/marco (25 % de compresión) |
+| Pasador acero Ø3 | 2 | Bisagra (~50 mm) y pivote del clip (~42 mm) |
+| Imán Ø6 × 3 + sensor Hall | 1 | Clip / cuna del solenoide |
+| Prensacable M20 | 1 | Knockout inferior (entrada de red) |
+| Tornillos a pared, cabeza tanque ≤ 3.5 mm | 4 | Ojales; las cabezas quedan debajo de la PCB |
 
 ## Armado
 
-1. Insertos termofijados en base, frente y postes del pozo.
-2. Toma en la placa adaptadora → placa contra la parte trasera del pozo, desde adentro, con su junta.
-3. Solenoide + Hall en la caja de traba → caja atornillada al frente (2 × M3) con junta.
-4. Bisagras al frente (2 × M3), tapa con el pasador.
-5. Base a la pared (4 tornillos), PCB en los standoffs, cableado: red por el prensacable a TB1,
-   faston a la toma, NTC, traba, pulsador, botón de emergencia.
-6. Cordón en la ranura, frente con 4 × M4.
+1. Insertos en base y postes del pozo. Solenoide en su cuna.
+2. Base a la pared (4 tornillos por los ojales), prensacable abajo.
+3. PCB en los standoffs; cableado: red a TB1, faston a la toma, RGB, emergencia, solenoide, Hall.
+4. Toma en la placa adaptadora → placa contra el pozo desde adentro.
+5. Cordón en la ranura, marco con 4 × M3. Tapa con su pasador; clip con el suyo.
 
-## Qué hay que confirmar con las piezas reales (CONFIRM en params.py)
+## A confirmar con piezas reales (CONFIRM)
 
-- **Toma** (decisión 0010): recorte de la placa, envolvente del cuerpo (Ø44 × 34 asumido).
-- **Botón de emergencia**: profundidad del bloque de contactos (40 mm asumido). Si es más largo,
-  el test `test_estop_clears_pcb_and_base` va a fallar: es el que protege la zona baja de la PCB.
-- **Solenoide**: cuerpo 12 × 20 × 11, carrera 4, pistón cortado a 4.8 mm de protrusión.
-- **Pulsador RGB QN12**: largo del cuerpo detrás del panel (20 mm asumido).
-- **Ficha del cargador Mode 2**: Ø42 × 45 de protrusión asumido; la tapa deja 3 mm de holgura.
-- **Insertos y cordón**: diámetros de agujero según el proveedor.
+Toma IRAM 2071 (recorte de la placa, cuerpo Ø44 × 28 asumido), botón de emergencia Ø16 (bloque Ø20 × 28),
+pulsador QN12 (cuerpo Ø16 × 20), solenoide (12 × 16 × 11, carrera 4), ficha del cargador (Ø42 × 45), insertos y cordón.
+Si una pieza real es más grande, el test correspondiente falla y dice dónde.
 
-## Pendientes conocidos
+## Limitaciones conocidas
 
-- Masa: la caja impresa (~367 g) deja a rev B en 728 g contra un presupuesto de 650 g → decisión de JB.
-- El pozo de la toma drena por el embudo; el tramo recto inferior (9 mm) es horizontal: evaluar 3° de
-  pendiente si en el ensayo de lluvia queda agua.
-- Tope de apertura de la tapa: hoy abre libre hasta ~100°; agregar tope si molesta.
-- Ensayos IP (IEC 60529) e hilo incandescente (docs/003) sobre la caja impresa en ASA.
+- **Knockout trasero bloqueado por la PCB**: está, como en el plano, pero con rev B la entrada de red es por
+  abajo. Usarlo exige un recorte Ø26 en el centro de la PCB (ver keepouts).
+- El plano muestra el clip; la geometría del clip es una interpretación (brazos + gancho), no una copia de la vista de detalle.
+- Ensayos pendientes sobre la caja impresa: IP (IEC 60529), hilo incandescente, UV (docs/003).
