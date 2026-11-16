@@ -15,6 +15,7 @@ sepan dónde mirar. Las reglas de trabajo para el agente están en [CLAUDE.md](C
 | [`reqs/budgets.yml`](reqs/budgets.yml) | Presupuestos de masa, potencia y costo, con unidades ([pint](https://pint.readthedocs.io)) | 1 |
 | [`decisions/`](decisions/) | Decisiones de diseño en formato [MADR](https://adr.github.io/madr/). Una decisión = un archivo. Nunca se edita, se supersede | 1 |
 | [`hw/`](hw/) | Electrónica en KiCad 10 (texto plano). Una carpeta por placa y revisión | 3 |
+| [`mechanical/`](mechanical/) | Caja como código (build123d): parámetros, modelo, renders, tests de interferencias | 2 |
 | [`bom/`](bom/) | Lista de materiales con códigos de pedido, masa, potencia y costo por parte | 5 |
 | [`fab/`](fab/) | Configuración de KiBot para generar gerbers, BOM y posiciones desde un YAML | 6 |
 | [`firmware/`](firmware/) | Firmware de campo (Arduino + MicroOcpp, PlatformIO). Lógica pura nueva en `lib/`, testeable en laptop | 7 |
@@ -30,6 +31,7 @@ sepan dónde mirar. Las reglas de trabajo para el agente están en [CLAUDE.md](C
 make check          # pytest (presupuestos + requerimientos) + tests nativos de firmware
 make fw-test        # solo tests nativos del firmware (no necesita placa)
 make hw-check       # ERC + DRC de todas las placas en hw/ (necesita KiCad 10 instalado)
+make mech-test      # caja: interferencias con PCB/toma/ficha, junta, traba, cama de impresión, masa
 ```
 
 Cada etapa tiene un chequeo determinístico que **falla** si algo está mal. Un cambio que hace fallar

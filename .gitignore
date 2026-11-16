@@ -25,3 +25,6 @@ data/runs/**/*.bin
 # OS
 .DS_Store
 firmware/platformio.local.ini
+
+# Caja: STL/STEP generados (CI los sube como artefacto)
+mechanical/enclosure/out/
